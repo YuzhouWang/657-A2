@@ -36,10 +36,12 @@ Fmeasure_knn = zeros(1, length(k));
 trTime = zeros(length(k),5);
 clTime = zeros(length(k),5);
 
+%Using 5-fold cross validation on the training set
+indices = crossvalind('Kfold', split, 5);
+
 %evaluate k-NN on the values k=[1, 3, 5, 7, ..., 31]
 for i = 1:length(k)
-    %Using 5-fold cross validation on the training set
-    indices = crossvalind('Kfold', split, 5);
+
     error = zeros(1,5);
     precision = zeros(1,5);
     recall = zeros(1,5);
@@ -54,28 +56,67 @@ for i = 1:length(k)
         trTime(i,j) = toc;
         
         tic;
-        label_knn = predict(model_knn, Test_data);
+        label_knn = predict(model_knn, Train_data((indices==j),:));
         clTime(i,j) = toc;
         
-        error(j) =  sum(label_knn ~= gnd(split+1:end,:));
-        tpfp = sum(label_knn == 1);
-        tpfn = sum(gnd(split+1:end,:)==1);
-        tp = sum(label_knn == (gnd(split+1:end,:) == 1));
-                
-        precision(j) = tp/tpfp;
-        recall(j) = tp/tpfn;
-        fmeasure(j) = 2 / (1/precision(j) + 1/recall(j));
+        error(j) =  sum(label_knn ~=  Train_group((indices==j),:));
+%         tpfp = sum(label_knn == 1);
+%         tpfn = sum(gnd(split+1:end,:)==1);
+%         tp = sum(label_knn == (gnd(split+1:end,:) == 1));
+%                 
+%         precision(j) = tp/tpfp;
+%         recall(j) = tp/tpfn;
+%         fmeasure(j) = 2 / (1/precision(j) + 1/recall(j));
     end
     error_knn(i) = mean(error);
     Accuracy_knn(i) = (1-error_knn(i)/(r-split))*100;
-    Precision_knn(i) = mean(precision);
-    Recall_knn(i) = mean(recall);
-    Fmeasure_knn(i) = mean(fmeasure);
+%     Precision_knn(i) = mean(precision);
+%     Recall_knn(i) = mean(recall);
+%     Fmeasure_knn(i) = mean(fmeasure);
 
     if maxAccuracy_knn < Accuracy_knn(i)
         maxAccuracy_knn = Accuracy_knn(i);
         bestk = k(i);
     end
+end
+
+figure;
+plot(k, Accuracy_knn);
+xlabel('k');
+ylabel('accuracy(%)');
+print(gcf, 'images\K-NN', '-dpng', '-r0');
+
+%% Now that we have the best k, train and test with all data:
+error_knn = zeros(1, 20);
+Accuracy_knn = zeros(1, 20);
+maxAccuracy_knn = 0;
+Precision_knn = zeros(1, 20);
+Recall_knn = zeros(1, 20);
+Fmeasure_knn = zeros(1, 20);
+
+for i = 1:20
+    %select a random half of the data for training, the other half for testing
+    ran= randperm(r);
+    randomTrain_data = feaZ(ran(1:split),:);
+    randomTrain_group = gnd(ran(1:split),:);
+    randomTest_data = feaZ(ran(split+1:end),:);
+    randomTest_group = gnd(ran(split+1:end),:);
+
+    model_knn = fitcknn(randomTrain_data, randomTrain_group, 'NumNeighbors', bestk);
+
+    label_knn = predict(model_knn, randomTest_data);
+
+    
+    error_knn(i) = sum(label_knn ~= randomTest_group);
+    Accuary_knn(i) = (1-error_knn(i)/(r-split))*100;
+    tpfp = sum(label_knn == 1);
+    tpfn = sum(randomTest_group ==1);
+    tp = sum(label_knn == (randomTest_group == 1));
+
+    Precision_knn(i) = tp/tpfp;
+    Recall_knn(i) = tp/tpfn;
+    Fmeasure_knn(i) = 2 / (1/Precision_knn(i) + 1/Recall_knn(i));
+
 end
 
 %the average and standard deviation of classification performance
@@ -91,11 +132,7 @@ stdFmeasure_knn = std(Fmeasure_knn);
 trainTime_knn = mean(mean(trTime));
 classifyTime_knn = mean(mean(clTime));
 
-figure;
-plot(k, Accuracy_knn);
-xlabel('k');
-ylabel('accuracy(%)');
-print(gcf, 'images\K-NN', '-dpng', '-r0');
+
 
 %% Clssify data using RBF kernel SVM classifier
 
@@ -114,13 +151,15 @@ fmeasure_svm = zeros(length(c), length(gamma));
 traintime = zeros(length(c), length(gamma), 5);
 classifytime = zeros(length(c), length(gamma), 5);
 
+ indices = crossvalind('Kfold', split, 5);
+
 %???every time the result is different
 %select soft margin penalty term "c" from the set [0.1, 0.5, 1, 2, 5, 10, 20, 50] 
 for i = 1:length(c)
     %select kernel width parameter "gamma" from the set [0.01, 0.05, 0.1, 0.5, 1, 2, 5, 10]
     for j = 1:length(gamma)
         %Using 5-fold cross validation on the training set
-        indices = crossvalind('Kfold', split, 5);
+       
         error = zeros(1,5);
         precision = zeros(1,5);
         recall = zeros(1,5);
