@@ -414,7 +414,7 @@ for i = 1:20
         
     %create a Neural Network
     hiddenLayerSize = 10;
-    net = patternnet(hiddenLayerSize);
+    net = patternnet(hiddenLayerSize); %this is the default
     
     %train the Neural Network
     tic;
