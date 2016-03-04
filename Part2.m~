@@ -16,33 +16,35 @@ end
 
 %% Apply PCA to reduce the dimension to be 4
 
+% %one way
 % covMatrix = cov(fea);
 % [eigenVector, eigenValues] = eig(covMatrix);
 % feaD4 = fea*eigenVector(:, end:-1:end-3);
 
+%another way
 [~,score,latent,~,~,~] = pca(fea);
 feaD4 = score(:,1:4);
 
 %% Cluster the data using agglomerative algorithms in hierarchical clustering 
+%???trsform gnd from [0,9] to [1,10]
+gnd = ind2vec((gnd+1)');
 
 %Single Link
+% %one way
 % tree_singlelink = linkage(feaD4, 'single');
 % cluster_singlelink = cluster(tree_singlelink, 'maxclust', 10);
+
+%another way
 cluster_singlelink = clusterdata(feaD4, 'linkage', 'single', 'maxclust', 10);
 
-
 %evaluate the clustering result in terms of Separation-Index, Rand-Index, and F-measure
-%???cluster index [1,10], class in
-error_singlelink =  sum(cluster_singlelink ~= gnd);
-%???how to caculate tp,fp,fn in multi-class
-% tpfp_singlelink = sum(cluster_singlelink == 1);
-% tpfn_singlelink = sum(gnd == 1);
-% tp_singlelink = sum(cluster_singlelink == (gnd == 1));
+output_singlelink = ind2vec(cluster_singlelink');
+confusion(gnd, output_singlelink)
 
 
 
-Accuracy_singlelink = (1-error_singlelink) / r *100;
-Precision_singlelink = tp_singlelink/tpfp_singlelink;
+Accuracy_singlelink = 
+Precision_singlelink 
 Recall_singlelink = tp_singlelink/tpfn_singlelink;
 Fmeasure_singlelink = 2 / (1/Precision_singlelink + 1/Recall_singlelink);
 
