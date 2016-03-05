@@ -55,7 +55,7 @@ for i = 1:length(k)
         crossTest_data = Train_data((indices==j),:);
         crossTest_class = Train_class((indices==j),:);
         
-        %knnclassify will be removed in a future release. 
+%         %knnclassify will be removed in a future release. 
 %         label_knn = knnclassify(crossTest_data, crossTrain_data, crossTrain_class, k(i), 'euclidean', 'nearest');
 
         %Instead use fitcknn to fit a knn classification model and classify data using predict function
