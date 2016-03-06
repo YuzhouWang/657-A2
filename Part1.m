@@ -199,10 +199,9 @@ for j = 1:split
     if Test_class(j,1) == 1
         Test_target(1,j) = 1;
         Test_target(2,j) = 0;
-    else if Test_class(j,1) == -1
+    elseif Test_class(j,1) == -1
         Test_target(1,j) = 0;
         Test_target(2,j) = 1;
-        end
     end 
 end
 
@@ -394,10 +393,9 @@ for i = 1:20
         if randomTrain_class(1,j) == 1
             randomTrain_target(1,j) = 1;
             randomTrain_target(2,j) = 0;
-        else if randomTrain_class(1,j) == -1
+        elseif randomTrain_class(1,j) == -1
             randomTrain_target(1,j) = 0;
             randomTrain_target(2,j) = 1;
-            end
         end 
     end
     
@@ -405,10 +403,9 @@ for i = 1:20
         if randomTest_class(1,j) == 1
             randomTest_target(1,j) = 1;
             randomTest_target(2,j) = 0;
-        else if randomTest_class(1,j) == -1
+        elseif randomTest_class(1,j) == -1
             randomTest_target(1,j) = 0;
             randomTest_target(2,j) = 1;
-            end
         end 
     end
         

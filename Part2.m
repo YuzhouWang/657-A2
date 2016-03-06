@@ -61,9 +61,9 @@ Randindex_singlelink = (a + b) / M;
 
 %% F-measure of Single Link:
 
-mij = zeros(10,10);
-ni = zeros(10,1);
-mj = zeros(10,1);
+mij = zeros(10,10); %number of samples of Classj in Cluster i
+ni = zeros(10,1); %number of samples in Clusteri
+mj = zeros(10,1); %number of samples in Clusterj
 precision_singlelink = zeros(10,10);
 recall_singlelink = zeros(10,10);
 f_singlelink = zeros(10,10);
@@ -112,9 +112,9 @@ end
 Randindex_completelink = (a + b) / M;
 
 %% F-measure of Complete Link:
-mij = zeros(10,10);
-ni = zeros(10,1);
-mj = zeros(10,1);
+mij = zeros(10,10); %number of samples of Classj in Cluster i
+ni = zeros(10,1); %number of samples in Clusteri
+mj = zeros(10,1); %number of samples in Clusterj
 precision_completelink = zeros(10,10);
 recall_completelink = zeros(10,10);
 f_completelink = zeros(10,10);
@@ -162,9 +162,9 @@ end
 Randindex_ward = (a + b) / M;
 
 %% F-measure of Ward's:
-mij = zeros(10,10);
-ni = zeros(10,1);
-mj = zeros(10,1);
+mij = zeros(10,10); %number of samples of Classj in Cluster i
+ni = zeros(10,1); %number of samples in Clusteri
+mj = zeros(10,1); %number of samples in Clusterj
 precision_ward = zeros(10,10);
 recall_ward = zeros(10,10);
 f_ward = zeros(10,10);
@@ -191,24 +191,181 @@ end
 %% the number of clusters in Ward's from 2 to 15
 for i = 2:15
     cluster_ward = clusterdata(feaD4, 'linkage', 'ward', 'maxclust', i);
-    %optimal number of clusters suggested by Separation- Index             need to be added
+    %optimal number of clusters suggested by Separation-Index             need to be added
 end
 
 %% Cluster the data using K-means algorithm
 
+[r,c] = size(fea);
+M = (r*(r-1))/2; %total number of pairs of samples
+
+Separationindex_kmeans = zeros(1,14);
+Randindex_kmeans = zeros(1,14);
+Fmeasure_kmeans = zeros(1,14);
+
 %the number of clusters from 2 to 15
-for i = 2:15
-    [cluster_kmeans,centroid] = kmeans(feaD4, i);
+for k = 2:15
+    
+    [cluster_kmeans,centroid] = kmeans(feaD4, k);
+    
+    %Separation index of K-means                                           need to be added
+    
+    %Rand index of K-means:
+    a = 0; %number of samples in the same class and the same cluster
+    b = 0; %number of samples in different classes and different clusters
+    
+    for i = 1:r
+        for j = i+1:r
+            if (gnd(i) == gnd(j)) && (cluster_kmeans(i) == cluster_kmeans(j))
+                a = a + 1;
+            elseif (gnd(i) ~= gnd(j)) && (cluster_kmeans(i) ~= cluster_kmeans(j))
+                b = b + 1;
+            end
+        end
+    end
+
+    Randindex_kmeans(k-1) = (a + b) / M;
+
+    %F-measure of kmeans:
+    mij = zeros(k,10);
+    ni = zeros(k,1);
+    mj = zeros(10,1);
+    precision = zeros(k,10);
+    recall = zeros(k,10);
+    f = zeros(k,10);
+    
+    for i = 1:r
+        mij(cluster_kmeans(i), gnd(i)+1) = mij(cluster_kmeans(i), gnd(i)+1) + 1;
+        ni(cluster_kmeans(i)) = ni(cluster_kmeans(i)) + 1;
+        mj(gnd(i)+1) = mj(gnd(i)+1) + 1;
+    end
+
+    for i=1:k
+        for j=1:10
+            precision(i,j) = mij(i,j) / ni(i);
+            recall(i,j) = mij(i,j) / mj(j);
+            f(i,j) = 1 / (1/precision(i,j) + 1/recall(i,j));
+        end
+    end
+
+    for j=1:10
+        Fmeasure_kmeans(k-1) = Fmeasure_kmeans(k-1) + mj(j,1) / r * max(f(:,j));
+    end
+    
 end
+
+%Plot these evaluation measures with respect to the number of clusters
+figure;
+plot(2:15, Randindex_kmeans, 2:15, Fmeasure_kmeans);
+xlabel('number of clusters');
+legend({'Rand index', 'F-measure'}, 'FontSize', 11); 
+print(gcf, 'images\K-Means', '-dpng', '-r0');
+
+% plot(2:15, Separationindex_kmeans);
+% hold on;
+% plot(2:15, Randindex_kmeans,2:15);
+% hold on;
+% plot(2:15, Fmeasure_kmeans);
+% hold off;
 
 %% Cluster the data using Fuzzy C-means algorithm
 
+[r,c] = size(fea);
+
 %set the exponent for partition matrix to 2
 options = [2; nan; nan ; nan];
-[center, cluster_fcmeans, obj_fcn] = fcm(feaD4, 10, options);
+[center, membership_value, obj_fcn] = fcm(feaD4, 10, options);
 
+avgmemvalue_digit1 = mean(membership_value(:, (gnd == 1)), 2);
+avgmemvalue_digit3 = mean(membership_value(:, (gnd == 3)), 2);
 
-%%
-clusters = max( cluster_fcmeans);
-% classes(i) = cluster_fcmeans(:,i) = clusters(i);
-%class1 = cluster_fcmeans(:,1) 
+figure;
+plot(1:10, avgmemvalue_digit1);
+xlabel('cluster');
+print(gcf, 'images\FC-means-digit1', '-dpng', '-r0');
+
+figure;
+plot(1:10, avgmemvalue_digit3);
+xlabel('cluster');
+print(gcf, 'images\FC-means-digit3', '-dpng', '-r0');
+
+%% hard clustering of Fuzzy C-means
+
+%find out the clusters of samples
+% cluster_fcmeans = zeros(1,r);
+% maxmembership_value = max(membership_value);
+% for i = 1:r
+%     cluster_fcmeans(i) = find(membership_value(:,i) == maxmembership_value(i));
+% end
+
+%make the max membership value of a sample to be one and the rest of its membership values zero
+maxmembership_value = max(membership_value);
+for i = 1:10
+    for j = 1:r
+        if membership_value(i,j) == maxmembership_value(j)
+            membership_value(i,j) = 1;
+        else
+            membership_value(i,j) = 0;
+        end
+    end
+end
+
+%find out the clusters of samples
+cluster_fcmeans = zeros(1,r);
+for i = 1:r
+    cluster_fcmeans(i) = find(membership_value(:,i) == maxmembership_value(i));
+end
+
+% evaluate the clustering result of Fuzzy C-means
+%% Separation Index of Fuzzy C-means:                                        need to be added
+
+[r,c] = size(fea);
+
+%% Rand index of Fuzzy C-means:
+
+[r,c] = size(fea);
+M = (r*(r-1))/2; %total number of pairs of samples
+
+a = 0; %number of samples in the same class and the same cluster
+b = 0; %number of samples in different classes and different clusters
+
+for i = 1:r
+    for j = i+1:r
+        if (gnd(i) == gnd(j)) && (cluster_fcmeans(i) == cluster_fcmeans(j))
+            a = a + 1;
+        elseif (gnd(i) ~= gnd(j)) && (cluster_fcmeans(i) ~= cluster_fcmeans(j))
+            b = b + 1;
+        end
+    end
+end
+
+Randindex_fcmeans = (a + b) / M;
+
+%% F-measure of Fuzzy C-means:
+
+mij = zeros(10,10); %number of samples of Classj in Cluster i
+ni = zeros(10,1); %number of samples in Clusteri
+mj = zeros(10,1); %number of samples in Clusterj
+precision_fcmeans = zeros(10,10);
+recall_fcmeans = zeros(10,10);
+f_fcmeans = zeros(10,10);
+Fmeasure_fcmeans = 0;
+
+for i = 1:r
+    mij(cluster_fcmeans(i), gnd(i)+1) = mij(cluster_fcmeans(i), gnd(i)+1) + 1;
+    ni(cluster_fcmeans(i)) = ni(cluster_fcmeans(i)) + 1;
+    mj(gnd(i)+1) = mj(gnd(i)+1) + 1;
+end
+
+for i=1:10
+    for j=1:10
+        precision_fcmeans(i,j) = mij(i,j) / ni(i);
+        recall_fcmeans(i,j) = mij(i,j) / mj(j);
+        f_fcmeans(i,j) = 1 / (1/precision_fcmeans(i,j) + 1/recall_fcmeans(i,j));
+    end
+end
+
+for j=1:10
+    Fmeasure_fcmeans = Fmeasure_fcmeans + mj(j,1) / r * max(f_fcmeans(:,j));
+end
+
