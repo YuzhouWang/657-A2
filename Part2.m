@@ -2,21 +2,16 @@
 
 load('DataF');
 
-%% Normalization
-
-[r,c] = size(fea);
-
-for i=1:c
-    meanval = mean(fea(:,i));
-    
-    for j=1:r
-        fea(j,i) = fea(j,i) - meanval;
-    end
-end
-
 %% Apply PCA to reduce the dimension to be 4
 
 % %one way
+% for i=1:c
+%     meanval = mean(fea(:,i));
+%     
+%     for j=1:r
+%         fea(j,i) = fea(j,i) - meanval;
+%     end
+% end
 % covMatrix = cov(fea);
 % [eigenVector, eigenValues] = eig(covMatrix);
 % feaD4 = fea*eigenVector(:, end:-1:end-3);
