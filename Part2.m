@@ -276,12 +276,12 @@ avgmemvalue_digit3 = mean(membership_value(:, (gnd == 3)), 2);
 
 figure;
 plot(1:10, avgmemvalue_digit1);
-xlabel('cluster');
+xlabel('cluster 1');
 print(gcf, 'images\FC-means-digit1', '-dpng', '-r0');
 
 figure;
 plot(1:10, avgmemvalue_digit3);
-xlabel('cluster');
+xlabel('cluster 3');
 print(gcf, 'images\FC-means-digit3', '-dpng', '-r0');
 
 %% hard clustering of Fuzzy C-means
