@@ -130,9 +130,10 @@ trainTime_knn = mean(trainTime);
 classifyTime_knn = mean(classifyTime);
 
 %% Clssify data using RBF kernel SVM classifier
-
-addpath 'libsvm-3.21/matlab'
-
+% addpath to the libsvm toolbox and data
+addpath 'libsvm-3.21';
+addpath 'libsvm-3.21/matlab/';
+%%
 c = [0.1, 0.5, 1, 2, 5, 10, 20, 50];
 gamma = [0.01, 0.05, 0.1, 0.5, 1, 2, 5, 10];
 
@@ -154,18 +155,15 @@ for i = 1:length(c)
             crossTest_data = Train_data((indices==k),:);
             crossTest_class = Train_class((indices==k),:);
             
-%             %the first way
-%             SVMStruct = svmtrain(crossTrain_data, crossTrain_class, 'kernel_function', 'rbf', 'boxconstraint', c(i), 'rbf_sigma', gamma(j));
-%             label_svm = svmclassify(SVMStruct, crossTest_data);
+            paramString = sprintf('-c %f -t 2 -g %f', c(i), gamma(j));
+            model = svmtrain(crossTrain_class, crossTrain_data, paramString);
+            [predict_label, accuracy, prob_values] = svmpredict(crossTest_class, crossTest_data, model);
             
-%???the second way (not sure about KernelScale equals to gamma)
-            SVMModel = fitcsvm(crossTrain_data, crossTrain_class, 'KernelFunction', 'rbf', 'BoxConstraint', c(i), 'KernelScale', gamma(j));
-            [label_svm, score_svm] = predict(SVMModel, crossTest_data); 
-            
-            correct(k) =  sum(label_svm == crossTest_class);
+            correct(k) =  accuracy(1);
         end
-        correct_svm(i, j) = mean(correct); 
-        accuracy_svm(i, j) = correct_svm(i, j) /(split/5)*100;
+        %correct_svm(i, j) = mean(correct); 
+        accuracy_svm(i, j) = mean(correct); 
+        %accuracy_svm(i, j) = correct_svm(i, j) /(split/5)*100;
 
 %         %the third way using libsvm fuction 
 %         for k = 1:5
@@ -187,10 +185,14 @@ for i = 1:length(c)
         end
     end
 end
-
+%%
 %use bestc and bestgamma to classify the data 
-SVMModel = fitcsvm(Train_data, Train_class, 'KernelFunction', 'rbf', 'BoxConstraint', bestc, 'KernelScale', bestgamma);
-[bestlabel_svm, bestscore_svm] = predict(SVMModel, Test_data);
+%SVMModel = fitcsvm(Train_data, Train_class, 'KernelFunction', 'rbf', 'BoxConstraint', bestc, 'KernelScale', bestgamma);
+%[bestlabel_svm, bestscore_svm] = predict(SVMModel, Test_data);
+
+paramString = sprintf('-c %f -t 2 -g %f', bestc, bestgamma);
+model = svmtrain(Train_class, Train_data, paramString);
+[predict_label, accuracy, prob_values] = svmpredict(Test_class, Test_data, model);
 
 %trasform Test_class
 Test_target = zeros(2,r-split);
@@ -236,11 +238,15 @@ for i = 1:20
     randomTest_class = gnd(ran(split+1:end),:);
 
     tic;
-    SVMModel = fitcsvm(randomTrain_data, randomTrain_class, 'KernelFunction', 'rbf', 'BoxConstraint', bestc, 'KernelScale', bestgamma);
+    paramString = sprintf('-c %f -t 2 -g %f', bestc, bestgamma);
+    model = svmtrain(randomTrain_class, randomTrain_data, paramString);
+
+    %SVMModel = fitcsvm(randomTrain_data, randomTrain_class, 'KernelFunction', 'rbf', 'BoxConstraint', bestc, 'KernelScale', bestgamma);
     trainTime(i,j) = toc;
 
     tic;
-    [label_svm, score_svm] = predict(SVMModel, randomTest_data); 
+    [label_svm, score_svm, prob_values] = svmpredict(randomTest_class, randomTest_data, model);
+    %[label_svm, score_svm] = predict(SVMModel, randomTest_data); 
     classifyTime(i,j) = toc;
 
     Correct = sum(label_svm == randomTest_class);
@@ -248,12 +254,12 @@ for i = 1:20
     tpfn = sum(randomTest_class == 1);
     tp = sum(label_svm == (randomTest_class == 1));
 
-    Accuracy_svm(i) = Correct/(r-split)*100;
+    Accuracy_svm(i) = score_svm(1); %Correct/(r-split)*100;
     Precision_svm(i) = tp/tpfp;
     Recall_svm(i) = tp/tpfn;
     Fmeasure_svm(i) = 2 / (1/Precision_svm(i) + 1/Recall_svm(i));
 end
-
+%%
 %the average and standard deviation of classification performance
 avgAccuracy_svm = mean(Accuracy_svm);
 stdAccuracy_svm = std(Accuracy_svm);
