@@ -183,6 +183,10 @@ for j=1:10
     Fmeasure_ward = Fmeasure_ward + mj(j,1) / r * max(f_ward(:,j));
 end
 
+%% Measures for all:
+Part1Measures = [Randindex_singlelink Randindex_completelink Randindex_ward; 
+    Fmeasure_singlelink Fmeasure_completelink Fmeasure_ward];
+
 %% the number of clusters in Ward's from 2 to 15
 for i = 2:15
     cluster_ward = clusterdata(feaD4, 'linkage', 'ward', 'maxclust', i);

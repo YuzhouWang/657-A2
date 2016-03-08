@@ -190,7 +190,7 @@ end
 %SVMModel = fitcsvm(Train_data, Train_class, 'KernelFunction', 'rbf', 'BoxConstraint', bestc, 'KernelScale', bestgamma);
 %[bestlabel_svm, bestscore_svm] = predict(SVMModel, Test_data);
 
-paramString = sprintf('-c %f -t 2 -g %f', bestc, bestgamma);
+paramString = sprintf('-c %f -t 2 -b 1 -g %f', bestc, bestgamma);
 model = svmtrain(Train_class, Train_data, paramString);
 [predict_label, accuracy, prob_values] = svmpredict(Test_class, Test_data, model);
 
