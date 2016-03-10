@@ -4,7 +4,7 @@
 \usepackage{subcaption}
 %opening
 \title{ECE 657A Assignment \#2}
-\author{Yuzhou Wang (20609396), Laura McCrackin (20262085), \newline and   Huang Tianhui (20587328)       }
+\author{Yuzhou Wang (20609396), Laura McCrackin (20262085), \newline and Huang Tianhui (20587328)       }
 
 
 \begin{document}
@@ -16,29 +16,37 @@
 %\includegraphics{../images/741741}
 %%\end{figure}
 
-\section{Parameter Selection and Classification (for dataset D)}
+\section{Parameter Selection and Classification}
 Classify dataset D using five classifiers: k-NN, Support Vector Machine (with RBF kernel), Naïve Bayes Classifier, Decision Trees and Neural Networks. 
-\subsection{question 1}
-1)Preprocess the given data using the Z-score normalization, and split the data into two halves, the first half being the training set and the second half being the test set. (Normally you would do this randomly, but for this assignment a deterministic split will make the rest of the answers easier to grade).
+\subsection{Preprocessing}
+%1)Preprocess the given data using the Z-score normalization, and split the data into two halves, the first half being the training set and the second half being the test set. (Normally you would do this randomly, but for this assignment a deterministic split will make the rest of the answers easier to grade).
 
-For the original dataset D, we notice that there is no missing values, the value is around the average mean, so we could use Z-score normalization to separate the data into two groups and use the function “zscore” in Matlab library directly.
-(Here later maybe I could add some comparation for different methods like after the normalization the graph is more in the center area)
+For the original dataset D, we noticed that there are no missing values, and all the values are around the mean.  Therefore, we do not perform any outlier correction, and simply use Z-score normalization.  We used the first half of our data as training points, and the second half for testing.
+
+%and use the function “zscore” in Matlab library directly.
+%(Here later maybe I could add some comparation for different methods like after the normalization the graph is more in the center area)
 
 
-\subsection{question 2}
-2)For k-NN you need to evaluate the best value k to use. Using 5-fold cross validation (the crossvalind function can help) on the training set evaluate k-NN on the values k=[1, 3, 5, 7, ..., 31]. Plot a figure that shows the relationship between the accuracy and the parameter k. Report the best k in terms of classification accuracy.
+\subsection{K-NN}
+%2)For k-NN you need to evaluate the best value k to use. Using 5-fold cross validation (the crossvalind function can help) on the training set evaluate k-NN on the values k=[1, 3, 5, 7, ..., 31]. Plot a figure that shows the relationship between the accuracy and the parameter k. Report the best k in terms of classification accuracy.
 
 
 Here we could see these two pictures for K-NN, and some different result could get. 
-From the picture, we could see that the best k is 7 with around 73% accuracy and sometimes k is 5 with nearly 72% accuracy. After we run it for several times, we could the conclusion that the best k is between 5 and 12.
+From the picture, we could see that the best k is 7 with around 73\% accuracy and sometimes k is 5 with nearly 72\% accuracy. After we run it for several times, we could the conclusion that the best k is between 5 and 12.
 We could also see from the picture that at the very beginning, the accuracy increased and later after the best k, it decreased. I think maybe it is the reason that less than k points is to small to be a class, in other words, less points can not represent a class, but if K is too large, then it means that some other useless points maybe included which leads to a lower accuracy. Lastly, since we randomly choose the dataset and split them so that there could be some flexible results also.(seems not for we choose the beginning and later part)
 And what is more, we should also notice about the accuracy about the dataset itself, maybe there are some outliers. And what is more, since it is DNA sequence, it means some cuts maybe represent nothing, but it still appears at the dataset with a label. Above all, the result we get is not the exactly right answer.
 
 
-do not forget to insert pictures
+\begin{figure}[h]
+\centering
+  \includegraphics[width=1\linewidth]{../images/K-NN}
+  \caption{The cross-validation accuracy using different values of k.}
+  \label{fig:K-NN}
 
-\subsubsection{question 3}
-3)For the RBF kernel SVM, there are two parameters to be decided: the soft margin penalty term "c" and the kernel width parameter “gamma”. Again use 5-fold cross validation on the training set to select the parameter "c" from the set [0.1, 0.5, 1, 2, 5, 10, 20, 50] and select the parameter “gamma” from the set [0.01, 0.05, 0.1, 0.5, 1, 2, 5, 10]. Report the best parameters in terms of classification accuracy including plotting the ROC curves.
+\end{figure}
+
+\subsubsection{SVM Using RBF Kernel}
+%3)For the RBF kernel SVM, there are two parameters to be decided: the soft margin penalty term "c" and the kernel width parameter “gamma”. Again use 5-fold cross validation on the training set to select the parameter "c" from the set [0.1, 0.5, 1, 2, 5, 10, 20, 50] and select the parameter “gamma” from the set [0.01, 0.05, 0.1, 0.5, 1, 2, 5, 10]. Report the best parameters in terms of classification accuracy including plotting the ROC curves.
 
 
 
@@ -52,8 +60,8 @@ What is more, theoretically with the increasing of gamma(kennel width), the accu
 ?I am not sure if we better to plot a gamma graph to demonstrate this point of view.?
 
 
-\subsubsection{question 4}
-4)Using the chosen parameters from the above parameter selection process for k-NN and SVM, and the default setups for Naïve Bayes classifier, Decision Tree and Neural Network, classify the test set. Repeat each classification method 20 times by varying the split of training-test set (now select a random half of the data for training and the other half for test). Report the average and standard deviation of classification performance on the test set regarding: accuracy, precision, recall, and F- Measure. Also report the training time and classification time of the four methods.
+\subsubsection{Comparing K-NN, SVM with an RBF kernel, Naive Bayes, Decision Trees, and Neural Networks }
+%4)Using the chosen parameters from the above parameter selection process for k-NN and SVM, and the default setups for Naïve Bayes classifier, Decision Tree and Neural Network, classify the test set. Repeat each classification method 20 times by varying the split of training-test set (now select a random half of the data for training and the other half for test). Report the average and standard deviation of classification performance on the test set regarding: accuracy, precision, recall, and F- Measure. Also report the training time and classification time of the four methods.
 
 
 
@@ -63,8 +71,8 @@ From the accuracy table above, we could see that the best method is decision tre
 here should insert a table
 
 
-\subsubsection{question 5}
-5)Comment on the obtained results, what are the benefits and weaknesses of each method on this dataset. How could this analysis help to make the choice of the right method to use for a dataset of this type in the future?
+\subsubsection{Strengths and Weaknesses of Each Method}
+%5)Comment on the obtained results, what are the benefits and weaknesses of each method on this dataset. How could this analysis help to make the choice of the right method to use for a dataset of this type in the future?
 
 
 K-NN: Training a k-NN classifier simply consists of determining k and preprocessing documents. In fact, if we preselect a value for k and do not preprocess, then kNN requires no training at all. It means that for K-NN, there is no training process and for the classification process, compare the test sample with all of the samples, the time measure has been divided by all of samples.
@@ -167,24 +175,24 @@ Rand-Index=?
 F-measure=?
 So from the above, we could get the conclution that, which method is the best, their advantages and disadvantages.
 
-\begin{figure}[p]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{../images/hist9_before}
-  \caption{Feature 9}
-  \label{fig:sub1}
-\end{subfigure}%
-
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{../images/hist24_before}
-  \caption{Feature 24}
-  \label{fig:sub2}
-\end{subfigure}
-\caption{Data histograms before normalization.}
-\label{fig:hist1}
-\end{figure}
+%\begin{figure}[p]
+%\centering
+%\begin{subfigure}{.5\textwidth}
+%  \centering
+%  \includegraphics[width=1\linewidth]{../images/hist9_before}
+%  \caption{Feature 9}
+%  \label{fig:sub1}
+%\end{subfigure}%
+%
+%\begin{subfigure}{.5\textwidth}
+%  \centering
+%  \includegraphics[width=1\linewidth]{../images/hist24_before}
+%  \caption{Feature 24}
+%  \label{fig:sub2}
+%\end{subfigure}
+%\caption{Data histograms before normalization.}
+%\label{fig:hist1}
+%\end{figure}
 
 
 
