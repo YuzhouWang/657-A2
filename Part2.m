@@ -40,9 +40,9 @@ for i = 1:10
     centroid_singlelink(i, :) = sum(feaD4_cluster,1)/sum((cluster_singlelink == i));
 end
 
-for i = 1:10
-    sum((a-b).^2)
-Separationindex_singlelink = 
+% for i = 1:10
+%     sum((a-b).^2)
+% Separationindex_singlelink = 
 
 
 %% Rand index of Single Link:
@@ -302,14 +302,13 @@ print(gcf, 'images\FC-means-digit3', '-dpng', '-r0');
 %% hard clustering of Fuzzy C-means
 
 %find out the clusters of samples
-% cluster_fcmeans = zeros(1,r);
-% maxmembership_value = max(membership_value);
-% for i = 1:r
-%     cluster_fcmeans(i) = find(membership_value(:,i) == maxmembership_value(i));
-% end
+cluster_fcmeans = zeros(1,r);
+maxmembership_value = max(membership_value);
+for i = 1:r
+    cluster_fcmeans(i) = find(membership_value(:,i) == maxmembership_value(i));
+end
 
 %make the max membership value of a sample to be one and the rest of its membership values zero
-maxmembership_value = max(membership_value);
 for i = 1:10
     for j = 1:r
         if membership_value(i,j) == maxmembership_value(j)
@@ -318,12 +317,6 @@ for i = 1:10
             membership_value(i,j) = 0;
         end
     end
-end
-
-%find out the clusters of samples
-cluster_fcmeans = zeros(1,r);
-for i = 1:r
-    cluster_fcmeans(i) = find(membership_value(:,i) == maxmembership_value(i));
 end
 
 % evaluate the clustering result of Fuzzy C-means
