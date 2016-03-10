@@ -30,13 +30,24 @@ feaD4 = score(:,1:4);
 cluster_singlelink = clusterdata(feaD4, 'linkage', 'single', 'maxclust', 10);
 
 % evaluate the clustering result of Single Link
-%% Separation Index of Single Link:                                        need to be added
+%% Separation Index of Single Link:                                        
 
-[r,c] = size(fea);
+[r,c] = size(feaD4);
+
+centroid_singlelink = zeros(10, 4);
+for i = 1:10
+    feaD4_cluster = feaD4((cluster_singlelink == i), :);
+    centroid_singlelink(i, :) = sum(feaD4_cluster,1)/sum((cluster_singlelink == i));
+end
+
+for i = 1:10
+    sum((a-b).^2)
+Separationindex_singlelink = 
+
 
 %% Rand index of Single Link:
 
-[r,c] = size(fea);
+[r,c] = size(feaD4);
 M = (r*(r-1))/2; %total number of pairs of samples
 
 a = 0; %number of samples in the same class and the same cluster
@@ -88,7 +99,7 @@ cluster_completelink = clusterdata(feaD4, 'linkage', 'complete', 'maxclust', 10)
 
 % evaluate the clustering result of Complete Link
 %% Rand index of Complete Link:
-[r,c] = size(fea);
+[r,c] = size(feaD4);
 M = (r*(r-1))/2; %total number of pairs of samples
 
 a = 0; %number of samples in the same class and the same cluster
@@ -138,7 +149,7 @@ end
 cluster_ward = clusterdata(feaD4, 'linkage', 'ward', 'maxclust', 10);
 % evaluate the clustering result of Ward's
 %% Rand index of Ward's:
-[r,c] = size(fea);
+[r,c] = size(feaD4);
 M = (r*(r-1))/2; %total number of pairs of samples
 
 a = 0; %number of samples in the same class and the same cluster
@@ -195,7 +206,7 @@ end
 
 %% Cluster the data using K-means algorithm
 
-[r,c] = size(fea);
+[r,c] = size(feaD4);
 M = (r*(r-1))/2; %total number of pairs of samples
 
 Separationindex_kmeans = zeros(1,14);
@@ -269,7 +280,7 @@ print(gcf, 'images\K-Means', '-dpng', '-r0');
 
 %% Cluster the data using Fuzzy C-means algorithm
 
-[r,c] = size(fea);
+[r,c] = size(feaD4);
 
 %set the exponent for partition matrix to 2
 options = [2; nan; nan ; nan];
@@ -318,11 +329,11 @@ end
 % evaluate the clustering result of Fuzzy C-means
 %% Separation Index of Fuzzy C-means:                                        need to be added
 
-[r,c] = size(fea);
+[r,c] = size(feaD4);
 
 %% Rand index of Fuzzy C-means:
 
-[r,c] = size(fea);
+[r,c] = size(feaD4);
 M = (r*(r-1))/2; %total number of pairs of samples
 
 a = 0; %number of samples in the same class and the same cluster

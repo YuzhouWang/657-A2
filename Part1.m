@@ -146,38 +146,40 @@ indices = crossvalind('Kfold', split, 5);
 %select soft margin penalty term "c" from the set [0.1, 0.5, 1, 2, 5, 10, 20, 50] 
 for i = 1:length(c)
     %select kernel width parameter "gamma" from the set [0.01, 0.05, 0.1, 0.5, 1, 2, 5, 10]
-    for j = 1:length(gamma)       
-        correct = zeros(1,5);
-        %Using 5-fold cross validation on the training set
+    for j = 1:length(gamma)               
+%         %one way
+%         correct = zeros(1,5);
+%         %Using 5-fold cross validation on the training set
+%         for k = 1:5
+%             crossTrain_data = Train_data((indices~=k),:);
+%             crossTrain_class = Train_class((indices~=k),:);
+%             crossTest_data = Train_data((indices==k),:);
+%             crossTest_class = Train_class((indices==k),:);
+%             
+%             SVMStruct = svmtrain(crossTrain_data, crossTrain_class, 'kernel_function', 'rbf', 'boxconstraint', c(i), 'rbf_sigma', sqrt(1/(2*gamma(j))));
+%             label_svm = svmclassify(SVMStruct, crossTest_data);
+%
+%             correct(k) =  sum(label_svm == crossTest_class);
+%         end
+%         correct_svm(i, j) = mean(correct); 
+%         accuracy_svm(i, j) = correct_svm(i, j) /(split/5)*100;
+
+        %another way using libsvm fuction 
+        accuracy = zeros(1,5);
         for k = 1:5
             crossTrain_data = Train_data((indices~=k),:);
             crossTrain_class = Train_class((indices~=k),:);
             crossTest_data = Train_data((indices==k),:);
             crossTest_class = Train_class((indices==k),:);
             
-            paramString = sprintf('-c %f -t 2 -g %f', c(i), gamma(j));
-            model = svmtrain(crossTrain_class, crossTrain_data, paramString);
-            [predict_label, accuracy, prob_values] = svmpredict(crossTest_class, crossTest_data, model);
-            
-            correct(k) =  accuracy(1);
+            %if set '-v 5', return accuracy of classification using 5-fold cross validation ranther than a svmmodel
+            paramString = sprintf('-c %f -t 2 -g %f -b 1', c(i), gamma(j));
+            model_svm = libsvmtrain(crossTrain_class, crossTrain_data, paramString);
+            [~, accu, ~] = libsvmpredict(crossTest_class, crossTest_data, model_svm, '-b 1');
+        
+          accuracy(k) = accu(1);
         end
-        %correct_svm(i, j) = mean(correct); 
-        accuracy_svm(i, j) = mean(correct); 
-        %accuracy_svm(i, j) = correct_svm(i, j) /(split/5)*100;
-
-%         %the third way using libsvm fuction 
-%         for k = 1:5
-%             crossTrain_data = Train_data((indices~=k),:);
-%             crossTrain_class = Train_class((indices~=k),:);
-%             crossTest_data = Train_data((indices==k),:);
-%             crossTest_class = Train_class((indices==k),:);
-%             %if set '-v 5', return accuracy of classification using 5-fold cross validation ranther than a svmmodel
-%             model_svm = libsvmtrain(crossTrain_class, crossTrain_data, ['-t 2 -b 1 -c ',num2str(c(i)),' -g ',num2str(gamma(j))]);
-%             [label_svm, accuracy, prob_estimates] = libsvmpredict(crossTest_class, crossTest_data, model_svm);
-%         
-%           accuracy_svm(i, j) = accuracy(1);
-%         end
-
+        accuracy_svm(i, j) = mean(accuracy)
         if (maxAccuracy_svm < accuracy_svm(i, j))
             maxAccuracy_svm = accuracy_svm(i, j);
             bestc = c(i);
@@ -187,15 +189,13 @@ for i = 1:length(c)
 end
 %%
 %use bestc and bestgamma to classify the data 
-%SVMModel = fitcsvm(Train_data, Train_class, 'KernelFunction', 'rbf', 'BoxConstraint', bestc, 'KernelScale', bestgamma);
-%[bestlabel_svm, bestscore_svm] = predict(SVMModel, Test_data);
 
-paramString = sprintf('-c %f -t 2 -b 1 -g %f', bestc, bestgamma);
-model = svmtrain(Train_class, Train_data, paramString);
-[predict_label, accuracy, prob_values] = svmpredict(Test_class, Test_data, model);
-
+paramString = sprintf('-c %f -t 2 -g %f -b 1', bestc, bestgamma);
+model_svm = libsvmtrain(Train_class, Train_data, paramString);
+[label_svm, accu, prob_estimates] = libsvmpredict(Test_class, Test_data, model_svm, '-b 1');
+        
 %trasform Test_class
-Test_target = zeros(2,r-split);
+Test_target = zeros(2, r-split);
     
 for j = 1:split
     if Test_class(j,1) == 1
@@ -207,17 +207,11 @@ for j = 1:split
     end 
 end
 
-% %???not sure about transform bestscore_svm to [0,1]
-% for i = 1:split/5
-%     for j = 1:2
-%         bestscore_svm(i,j) = (bestscore_svm(i,j)-min(bestscore_svm(:,j))) / (max(bestscore_svm(:,j))-min(bestscore_svm(:,j)));
-%     end
-% end
-
 %plot ROC curve
-[tpr,fpr,thresholds] = roc(Test_target,bestscore_svm');
+[tpr,fpr,thresholds] = roc(Test_target, prob_estimates');
 figure;
-plotroc(Test_target,bestscore_svm');
+plotroc(Test_target, prob_estimates');
+print(gcf, 'images\SVM-ROC', '-dpng', '-r0');
 
 %% Now that we have the best c and gamma, train and test with all data:
 
@@ -236,25 +230,21 @@ for i = 1:20
     randomTrain_class = gnd(ran(1:split),:);
     randomTest_data = feaZ(ran(split+1:end),:);
     randomTest_class = gnd(ran(split+1:end),:);
-
-    tic;
+    
     paramString = sprintf('-c %f -t 2 -g %f', bestc, bestgamma);
-    model = svmtrain(randomTrain_class, randomTrain_data, paramString);
-
-    %SVMModel = fitcsvm(randomTrain_data, randomTrain_class, 'KernelFunction', 'rbf', 'BoxConstraint', bestc, 'KernelScale', bestgamma);
+    tic;
+    model_svm = libsvmtrain(randomTrain_class, randomTrain_data, paramString);
     trainTime(i,j) = toc;
 
     tic;
-    [label_svm, score_svm, prob_values] = svmpredict(randomTest_class, randomTest_data, model);
-    %[label_svm, score_svm] = predict(SVMModel, randomTest_data); 
+    [label_svm, accu, prob_estimates] = libsvmpredict(randomTest_class, randomTest_data, model_svm);
     classifyTime(i,j) = toc;
 
-    Correct = sum(label_svm == randomTest_class);
     tpfp = sum(label_svm == 1);
     tpfn = sum(randomTest_class == 1);
     tp = sum(label_svm == (randomTest_class == 1));
 
-    Accuracy_svm(i) = score_svm(1); %Correct/(r-split)*100;
+    Accuracy_svm(i) = accu(1); 
     Precision_svm(i) = tp/tpfp;
     Recall_svm(i) = tp/tpfn;
     Fmeasure_svm(i) = 2 / (1/Precision_svm(i) + 1/Recall_svm(i));
