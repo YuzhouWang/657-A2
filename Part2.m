@@ -34,7 +34,7 @@ cluster_singlelink = clusterdata(feaD4, 'linkage', 'single', 'maxclust', 10);
 
 [r,c] = size(feaD4);
 sumdistinc = 0;
-maxdistincs = 0;
+mindist = 1000;
 
 for i = 1:10
     feaD4_cluster = feaD4((cluster_singlelink == i), :);
@@ -44,6 +44,7 @@ end
 
 for i = 1:9
     for j = i+1:10
+        maxdistincs = 0;
         feaD4_cluster_i = feaD4((cluster_singlelink == i), :);
         numi = sum(cluster_singlelink == i);
         feaD4_cluster_j = feaD4((cluster_singlelink == j), :);
@@ -56,10 +57,13 @@ for i = 1:9
                 end
             end
         end
+        if maxdistincs < mindist
+            mindist = maxdistincs;
+        end
     end
 end
 
-Separationindex_singlelink = sumdistinc / (r * maxdistincs);
+Separationindex_singlelink = sumdistinc / (r * mindist);
 
 %% Rand index of Single Link:
 
@@ -118,7 +122,7 @@ cluster_completelink = clusterdata(feaD4, 'linkage', 'complete', 'maxclust', 10)
 
 [r,c] = size(feaD4);
 sumdistinc = 0;
-maxdistincs = 0;
+mindist = 1000;
 
 for i = 1:10
     feaD4_cluster = feaD4((cluster_completelink == i), :);
@@ -128,6 +132,7 @@ end
 
 for i = 1:9
     for j = i+1:10
+        maxdistincs = 0;
         feaD4_cluster_i = feaD4((cluster_completelink == i), :);
         numi = sum(cluster_completelink == i);
         feaD4_cluster_j = feaD4((cluster_completelink == j), :);
@@ -140,10 +145,13 @@ for i = 1:9
                 end
             end
         end
+        if maxdistincs < mindist
+            mindist = maxdistincs;
+        end
     end
 end
 
-Separationindex_completelink = sumdistinc / (r * maxdistincs);
+Separationindex_completelink = sumdistinc / (r * mindist);
 
 %% Rand index of Complete Link:
 [r,c] = size(feaD4);
@@ -200,7 +208,7 @@ cluster_ward = clusterdata(feaD4, 'linkage', 'ward', 'maxclust', 10);
 
 [r,c] = size(feaD4);
 sumdistinc = 0;
-maxdistincs = 0;
+mindist = 1000;
 
 for i = 1:10
     feaD4_cluster = feaD4((cluster_ward == i), :);
@@ -210,6 +218,7 @@ end
 
 for i = 1:9
     for j = i+1:10
+        maxdistincs = 0;
         feaD4_cluster_i = feaD4((cluster_ward == i), :);
         numi = sum(cluster_ward == i);
         feaD4_cluster_j = feaD4((cluster_ward == j), :);
@@ -222,10 +231,13 @@ for i = 1:9
                 end
             end
         end
+        if maxdistincs < mindist
+            mindist = maxdistincs;
+        end
     end
 end
 
-Separationindex_ward = sumdistinc / (r * maxdistincs);
+Separationindex_ward = sumdistinc / (r * mindist);
 
 %% Rand index of Ward's:
 [r,c] = size(feaD4);
@@ -335,7 +347,7 @@ for k = 2:15
     %%
     %Separation index of K-means                                           
     sumdistinc = 0;
-    maxdistincs = 0;
+    mindist = 1000;
 
     for i = 1:k
         feaD4_cluster = feaD4((cluster_kmeans == i), :);
@@ -345,6 +357,7 @@ for k = 2:15
 
     for i = 1:k-1
         for j = i+1:k
+            maxdistincs = 0;
             feaD4_cluster_i = feaD4((cluster_kmeans == i), :);
             numi = sum(cluster_kmeans == i);
             feaD4_cluster_j = feaD4((cluster_kmeans == j), :);
@@ -357,10 +370,13 @@ for k = 2:15
                     end
                 end
             end
+            if maxdistincs < mindist
+                mindist = maxdistincs;
+            end
         end
     end
 
-    Separationindex_kmeans(k-1) = sumdistinc / (r * maxdistincs);
+    Separationindex_kmeans(k-1) = sumdistinc / (r * mindist);
     
     %%
     %Rand index of K-means:
@@ -468,7 +484,7 @@ end
 
 [r,c] = size(feaD4);
 sumdistinc = 0;
-mindist = 0;%%%
+mindist = 1000;
 
 for i = 1:10
     feaD4_cluster = feaD4((cluster_fcmeans == i), :);
@@ -478,7 +494,7 @@ end
 
 for i = 1:9
     for j = i+1:10
-        maxdistincs = 0;%%%
+        maxdistincs = 0;
         feaD4_cluster_i = feaD4((cluster_fcmeans == i), :);
         numi = sum(cluster_fcmeans == i);
         feaD4_cluster_j = feaD4((cluster_fcmeans == j), :);
@@ -491,9 +507,9 @@ for i = 1:9
                 end
             end
         end
-        if mindist < maxdistincs%%%
-            mindist = maxdistincs;%%%
-        end%%%
+        if maxdistincs < mindist
+            mindist = maxdistincs;
+        end
     end
 end
 

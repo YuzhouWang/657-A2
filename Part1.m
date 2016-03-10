@@ -79,6 +79,15 @@ xlabel('k');
 ylabel('accuracy(%)');
 print(gcf, 'images\K-NN', '-dpng', '-r0');
 
+%%
+%use bestk to classify all data 
+
+model_knn_bestk = fitcknn(Train_data, Train_class, 'NumNeighbors', bestk);
+label_knn_bestk = predict(model_knn_bestk, Test_data);
+
+correct_knn_bestk =  sum(label_knn_bestk == Test_class);
+accuracy_knn_bestk = correct_knn_bestk / split * 100;
+
 %% Now that we have the best k, train and test with all data:
 
 Accuracy_knn = zeros(1, 20);
@@ -188,7 +197,7 @@ for i = 1:length(c)
     end
 end
 %%
-%use bestc and bestgamma to classify the data 
+%use bestc and bestgamma to classify all data 
 
 paramString = sprintf('-c %f -t 2 -g %f -b 1', bestc, bestgamma);
 model_svm = libsvmtrain(Train_class, Train_data, paramString);
