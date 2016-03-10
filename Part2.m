@@ -468,7 +468,7 @@ end
 
 [r,c] = size(feaD4);
 sumdistinc = 0;
-maxdistincs = 0;
+mindist = 0;%%%
 
 for i = 1:k
     feaD4_cluster = feaD4((cluster_fcmeans == i), :);
@@ -478,6 +478,7 @@ end
 
 for i = 1:k-1
     for j = i+1:k
+        maxdistincs = 0;%%%
         feaD4_cluster_i = feaD4((cluster_fcmeans == i), :);
         numi = sum(cluster_fcmeans == i);
         feaD4_cluster_j = feaD4((cluster_fcmeans == j), :);
@@ -490,10 +491,13 @@ for i = 1:k-1
                 end
             end
         end
+        if mindist < maxdistincs%%%
+            mindist = maxdistincs;%%%
+        end%%%
     end
 end
 
-Separationindex_fcmeans = sumdistinc / (r * maxdistincs);
+Separationindex_fcmeans = sumdistinc / (r * mindist);%%%
 
 %% Rand index of Fuzzy C-means:
 
