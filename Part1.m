@@ -40,7 +40,7 @@ for i = 1:length(k)
 %     %one way
 %     model = fitcknn(Train_data, Train_class, 'NumNeighbors', k(i), 'KFold', 5);
 %     error = kfoldLoss(model);
-%     accuracy = (1-error)*100;
+%     accuracy = (1-error);
 %     if maxAccuracy_knn < accuracy
 %         maxAccuracy_knn = accuracy;
 %         bestk = k(i);
@@ -65,7 +65,7 @@ for i = 1:length(k)
         correct(j) =  sum(label_knn == crossTest_class);
     end
     correct_knn(i) = mean(correct);
-    accuracy_knn(i) = correct_knn(i)/(split/5)*100;
+    accuracy_knn(i) = correct_knn(i)/(split/5);
     
     if maxAccuracy_knn < accuracy_knn(i)
         maxAccuracy_knn = accuracy_knn(i);
@@ -86,7 +86,7 @@ model_knn_bestk = fitcknn(Train_data, Train_class, 'NumNeighbors', bestk);
 label_knn_bestk = predict(model_knn_bestk, Test_data);
 
 correct_knn_bestk =  sum(label_knn_bestk == Test_class);
-accuracy_knn_bestk = correct_knn_bestk / split * 100;
+accuracy_knn_bestk = correct_knn_bestk / split;
 
 %% Now that we have the best k, train and test with all data:
 
@@ -108,18 +108,18 @@ for i = 1:20
 
     tic;
     model_knn = fitcknn(randomTrain_data, randomTrain_class, 'NumNeighbors', bestk);
-    trainTime(i,j) = toc;
+    trainTime(i) = toc;
 
     tic;
     label_knn = predict(model_knn, randomTest_data);
-    classifyTime(i,j) = toc;
+    classifyTime(i) = toc;
 
     Correct = sum(label_knn == randomTest_class);
     tpfp = sum(label_knn == 1);
     tpfn = sum(randomTest_class == 1);
     tp = sum(label_knn == (randomTest_class == 1));
 
-    Accuracy_knn(i) = Correct/(r-split)*100;
+    Accuracy_knn(i) = Correct/(r-split);
     Precision_knn(i) = tp/tpfp;
     Recall_knn(i) = tp/tpfn;
     Fmeasure_knn(i) = 2 / (1/Precision_knn(i) + 1/Recall_knn(i));
@@ -171,7 +171,7 @@ for i = 1:length(c)
 %             correct(k) =  sum(label_svm == crossTest_class);
 %         end
 %         correct_svm(i, j) = mean(correct); 
-%         accuracy_svm(i, j) = correct_svm(i, j) /(split/5)*100;
+%         accuracy_svm(i, j) = correct_svm(i, j) /(split/5);
 
         %another way using libsvm fuction 
         accuracy = zeros(1,5);
@@ -243,11 +243,11 @@ for i = 1:20
     paramString = sprintf('-c %f -t 2 -g %f', bestc, bestgamma);
     tic;
     model_svm = libsvmtrain(randomTrain_class, randomTrain_data, paramString);
-    trainTime(i,j) = toc;
+    trainTime(i) = toc;
 
     tic;
     [label_svm, accu, prob_estimates] = libsvmpredict(randomTest_class, randomTest_data, model_svm);
-    classifyTime(i,j) = toc;
+    classifyTime(i) = toc;
 
     tpfp = sum(label_svm == 1);
     tpfn = sum(randomTest_class == 1);
@@ -303,7 +303,7 @@ for i = 1:20
     tpfn = sum(randomTest_class == 1);
     tp = sum(label_naivebayes == (randomTest_class == 1));
 
-    Accuary_naivebayes(i) = Correct/(r-split)*100;
+    Accuary_naivebayes(i) = Correct/(r-split);
     Precision_naivebayes(i) = tp/tpfp;
     Recall_naivebayes(i) = tp/tpfn;
     Fmeasure_naivebayes(i) = 2 / (1/Precision_naivebayes(i) + 1/Recall_naivebayes(i));
@@ -353,7 +353,7 @@ for i = 1:20
     tpfn = sum(randomTest_class ==1);
     tp = sum(label_decisiontree == (randomTest_class == 1));
 
-    Accuary_decisiontree(i) = Correct/(r-split)*100;
+    Accuary_decisiontree(i) = Correct/(r-split);
     Precision_decisiontree(i) = tp/tpfp;
     Recall_decisiontree(i) = tp/tpfn;
     Fmeasure_decisiontree(i) = 2 / (1/Precision_decisiontree(i) + 1/Recall_decisiontree(i));
@@ -447,7 +447,7 @@ for i = 1:20
     tpfn = sum(randomTest_class ==1);
     tp = sum(label_neuralnetwork == (randomTest_class == 1));
 
-    Accuary_neuralnetwork(i) = Correct/(r-split)*100;
+    Accuary_neuralnetwork(i) = Correct/(r-split);
     Precision_neuralnetwork(i) = tp/tpfp;
     Recall_neuralnetwork(i) = tp/tpfn;
     Fmeasure_neuralnetwork(i) = 2 / (1/Precision_neuralnetwork(i) + 1/Recall_neuralnetwork(i));
