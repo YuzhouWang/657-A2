@@ -33,17 +33,33 @@ cluster_singlelink = clusterdata(feaD4, 'linkage', 'single', 'maxclust', 10);
 %% Separation Index of Single Link:                                        
 
 [r,c] = size(feaD4);
+sumdistinc = 0;
+maxdistincs = 0;
 
-centroid_singlelink = zeros(10, 4);
 for i = 1:10
     feaD4_cluster = feaD4((cluster_singlelink == i), :);
-    centroid_singlelink(i, :) = sum(feaD4_cluster,1)/sum((cluster_singlelink == i));
+    centroid = sum(feaD4_cluster,1)/sum((cluster_singlelink == i));
+    sumdistinc = sumdistinc + sum((feaD4_cluster(:, 1) - centroid(1)).^2) + sum((feaD4_cluster(:, 2) - centroid(2)).^2) + sum((feaD4_cluster(:, 3)- centroid(3)).^2) + sum((feaD4_cluster(:, 4) - centroid(4)).^2);
 end
 
-% for i = 1:10
-%     sum((a-b).^2)
-% Separationindex_singlelink = 
+for i = 1:9
+    for j = i+1:10
+        feaD4_cluster_i = feaD4((cluster_singlelink == i), :);
+        numi = sum(cluster_singlelink == i);
+        feaD4_cluster_j = feaD4((cluster_singlelink == j), :);
+        numj = sum(cluster_singlelink == j);
+        for k = 1:numi
+            for l = 1:numj
+                distincs = norm(feaD4_cluster_i(k, :) - feaD4_cluster_j(l, :));
+                if maxdistincs < distincs 
+                    maxdistincs = distincs;
+                end
+            end
+        end
+    end
+end
 
+Separationindex_singlelink = sumdistinc / (r * maxdistincs);
 
 %% Rand index of Single Link:
 
@@ -98,6 +114,37 @@ end
 cluster_completelink = clusterdata(feaD4, 'linkage', 'complete', 'maxclust', 10);
 
 % evaluate the clustering result of Complete Link
+%% Separation Index of Complete Link:                                        
+
+[r,c] = size(feaD4);
+sumdistinc = 0;
+maxdistincs = 0;
+
+for i = 1:10
+    feaD4_cluster = feaD4((cluster_completelink == i), :);
+    centroid = sum(feaD4_cluster,1)/sum((cluster_completelink == i));
+    sumdistinc = sumdistinc + sum((feaD4_cluster(:, 1) - centroid(1)).^2) + sum((feaD4_cluster(:, 2) - centroid(2)).^2) + sum((feaD4_cluster(:, 3)- centroid(3)).^2) + sum((feaD4_cluster(:, 4) - centroid(4)).^2);
+end
+
+for i = 1:9
+    for j = i+1:10
+        feaD4_cluster_i = feaD4((cluster_completelink == i), :);
+        numi = sum(cluster_completelink == i);
+        feaD4_cluster_j = feaD4((cluster_completelink == j), :);
+        numj = sum(cluster_completelink == j);
+        for k = 1:numi
+            for l = 1:numj
+                distincs = norm(feaD4_cluster_i(k, :) - feaD4_cluster_j(l, :));
+                if maxdistincs < distincs
+                    maxdistincs = distincs;
+                end
+            end
+        end
+    end
+end
+
+Separationindex_completelink = sumdistinc / (r * maxdistincs);
+
 %% Rand index of Complete Link:
 [r,c] = size(feaD4);
 M = (r*(r-1))/2; %total number of pairs of samples
@@ -147,7 +194,39 @@ end
 %% Ward's Algorithm(minimum variance algorithm)
 
 cluster_ward = clusterdata(feaD4, 'linkage', 'ward', 'maxclust', 10);
+
 % evaluate the clustering result of Ward's
+%% Separation Index of Ward's:                                        
+
+[r,c] = size(feaD4);
+sumdistinc = 0;
+maxdistincs = 0;
+
+for i = 1:10
+    feaD4_cluster = feaD4((cluster_ward == i), :);
+    centroid = sum(feaD4_cluster,1)/sum((cluster_ward == i));
+    sumdistinc = sumdistinc + sum((feaD4_cluster(:, 1) - centroid(1)).^2) + sum((feaD4_cluster(:, 2) - centroid(2)).^2) + sum((feaD4_cluster(:, 3)- centroid(3)).^2) + sum((feaD4_cluster(:, 4) - centroid(4)).^2);
+end
+
+for i = 1:9
+    for j = i+1:10
+        feaD4_cluster_i = feaD4((cluster_ward == i), :);
+        numi = sum(cluster_ward == i);
+        feaD4_cluster_j = feaD4((cluster_ward == j), :);
+        numj = sum(cluster_ward == j);
+        for k = 1:numi
+            for l = 1:numj
+                distincs = norm(feaD4_cluster_i(k, :) - feaD4_cluster_j(l, :));
+                if maxdistincs < distincs
+                    maxdistincs = distincs;
+                end
+            end
+        end
+    end
+end
+
+Separationindex_ward = sumdistinc / (r * maxdistincs);
+
 %% Rand index of Ward's:
 [r,c] = size(feaD4);
 M = (r*(r-1))/2; %total number of pairs of samples
@@ -195,13 +274,48 @@ for j=1:10
 end
 
 %% Measures for all:
-Part1Measures = [Randindex_singlelink Randindex_completelink Randindex_ward; 
+Part1Measures = [Separationindex_singlelink Separationindex_completelink Separationindex_ward; 
+    Randindex_singlelink Randindex_completelink Randindex_ward; 
     Fmeasure_singlelink Fmeasure_completelink Fmeasure_ward];
 
 %% the number of clusters in Ward's from 2 to 15
-for i = 2:15
-    cluster_ward = clusterdata(feaD4, 'linkage', 'ward', 'maxclust', i);
-    %optimal number of clusters suggested by Separation-Index             need to be added
+[r,c] = size(feaD4);
+Sindex_ward = zeros(1, 14);
+minSindex_ward = 1000;
+
+for m = 2:15
+    cluster_ward = clusterdata(feaD4, 'linkage', 'ward', 'maxclust', m);
+    %optimal number of clusters suggested by Separation-Index   
+    sumdistinc = 0;
+    maxdistincs = 0;
+
+    for i = 1:m
+        feaD4_cluster = feaD4((cluster_ward == i), :);
+        centroid = sum(feaD4_cluster,1)/sum((cluster_ward == i));
+        sumdistinc = sumdistinc + sum((feaD4_cluster(:, 1) - centroid(1)).^2) + sum((feaD4_cluster(:, 2) - centroid(2)).^2) + sum((feaD4_cluster(:, 3)- centroid(3)).^2) + sum((feaD4_cluster(:, 4) - centroid(4)).^2);
+    end
+
+    for i = 1:m-1
+        for j = i+1:m
+            feaD4_cluster_i = feaD4((cluster_ward == i), :);
+            numi = sum(cluster_ward == i);
+            feaD4_cluster_j = feaD4((cluster_ward == j), :);
+            numj = sum(cluster_ward == j);
+            for k = 1:numi
+                for l = 1:numj
+                    distincs = norm(feaD4_cluster_i(k, :) - feaD4_cluster_j(l, :));
+                    if maxdistincs < distincs
+                        maxdistincs = distincs;
+                    end
+                end
+            end
+        end
+    end
+    Sindex_ward = sumdistinc / (r * maxdistincs);
+    if  Sindex_ward < minSindex_ward
+        minSindex_ward = Sindex_ward;
+        bestclunum = m;
+    end
 end
 
 %% Cluster the data using K-means algorithm
@@ -218,8 +332,37 @@ for k = 2:15
     
     [cluster_kmeans,centroid] = kmeans(feaD4, k);
     
-    %Separation index of K-means                                           need to be added
+    %%
+    %Separation index of K-means                                           
+    sumdistinc = 0;
+    maxdistincs = 0;
+
+    for i = 1:k
+        feaD4_cluster = feaD4((cluster_kmeans == i), :);
+        centroid = sum(feaD4_cluster,1)/sum((cluster_kmeans == i));
+        sumdistinc = sumdistinc + sum((feaD4_cluster(:, 1) - centroid(1)).^2) + sum((feaD4_cluster(:, 2) - centroid(2)).^2) + sum((feaD4_cluster(:, 3)- centroid(3)).^2) + sum((feaD4_cluster(:, 4) - centroid(4)).^2);
+    end
+
+    for i = 1:k-1
+        for j = i+1:k
+            feaD4_cluster_i = feaD4((cluster_kmeans == i), :);
+            numi = sum(cluster_kmeans == i);
+            feaD4_cluster_j = feaD4((cluster_kmeans == j), :);
+            numj = sum(cluster_kmeans == j);
+            for m = 1:numi
+                for l = 1:numj
+                    distincs = norm(feaD4_cluster_i(m, :) - feaD4_cluster_j(l, :));
+                    if maxdistincs < distincs
+                        maxdistincs = distincs;
+                    end
+                end
+            end
+        end
+    end
+
+    Separationindex_kmeans(k-1) = sumdistinc / (r * maxdistincs);
     
+    %%
     %Rand index of K-means:
     a = 0; %number of samples in the same class and the same cluster
     b = 0; %number of samples in different classes and different clusters
@@ -236,6 +379,7 @@ for k = 2:15
 
     Randindex_kmeans(k-1) = (a + b) / M;
 
+    %%
     %F-measure of kmeans:
     mij = zeros(k,10);
     ni = zeros(k,1);
@@ -266,14 +410,14 @@ end
 
 %Plot these evaluation measures with respect to the number of clusters
 figure;
-plot(2:15, Randindex_kmeans, 2:15, Fmeasure_kmeans);
+plot(2:15, Separationindex_kmeans, 2:15, Randindex_kmeans, 2:15, Fmeasure_kmeans);
 xlabel('number of clusters');
-legend({'Rand index', 'F-measure'}, 'FontSize', 11); 
+legend({'Separation index', 'Rand index', 'F-measure'}, 'FontSize', 11); 
 print(gcf, 'images\K-Means', '-dpng', '-r0');
 
 % plot(2:15, Separationindex_kmeans);
 % hold on;
-% plot(2:15, Randindex_kmeans,2:15);
+% plot(2:15, Randindex_kmeans);
 % hold on;
 % plot(2:15, Fmeasure_kmeans);
 % hold off;
@@ -320,9 +464,36 @@ for i = 1:10
 end
 
 % evaluate the clustering result of Fuzzy C-means
-%% Separation Index of Fuzzy C-means:                                        need to be added
+%% Separation Index of Fuzzy C-means:                                      
 
 [r,c] = size(feaD4);
+sumdistinc = 0;
+maxdistincs = 0;
+
+for i = 1:k
+    feaD4_cluster = feaD4((cluster_fcmeans == i), :);
+    centroid = sum(feaD4_cluster,1)/sum((cluster_fcmeans == i));
+    sumdistinc = sumdistinc + sum((feaD4_cluster(:, 1) - centroid(1)).^2) + sum((feaD4_cluster(:, 2) - centroid(2)).^2) + sum((feaD4_cluster(:, 3)- centroid(3)).^2) + sum((feaD4_cluster(:, 4) - centroid(4)).^2);
+end
+
+for i = 1:k-1
+    for j = i+1:k
+        feaD4_cluster_i = feaD4((cluster_fcmeans == i), :);
+        numi = sum(cluster_fcmeans == i);
+        feaD4_cluster_j = feaD4((cluster_fcmeans == j), :);
+        numj = sum(cluster_fcmeans == j);
+        for m = 1:numi
+            for l = 1:numj
+                distincs = norm(feaD4_cluster_i(m, :) - feaD4_cluster_j(l, :));
+                if maxdistincs < distincs
+                    maxdistincs = distincs;
+                end
+            end
+        end
+    end
+end
+
+Separationindex_fcmeans = sumdistinc / (r * maxdistincs);
 
 %% Rand index of Fuzzy C-means:
 
