@@ -470,14 +470,14 @@ end
 sumdistinc = 0;
 mindist = 0;%%%
 
-for i = 1:k
+for i = 1:10
     feaD4_cluster = feaD4((cluster_fcmeans == i), :);
     centroid = sum(feaD4_cluster,1)/sum((cluster_fcmeans == i));
     sumdistinc = sumdistinc + sum((feaD4_cluster(:, 1) - centroid(1)).^2) + sum((feaD4_cluster(:, 2) - centroid(2)).^2) + sum((feaD4_cluster(:, 3)- centroid(3)).^2) + sum((feaD4_cluster(:, 4) - centroid(4)).^2);
 end
 
-for i = 1:k-1
-    for j = i+1:k
+for i = 1:9
+    for j = i+1:10
         maxdistincs = 0;%%%
         feaD4_cluster_i = feaD4((cluster_fcmeans == i), :);
         numi = sum(cluster_fcmeans == i);
