@@ -20,7 +20,7 @@
 
 \subsection{question 1}
 
-For the original dataset D, we notice that there is no missing values, the value is around the average mean, so we could use Z-score normalization to preprocessing data and use the function “zscore” in Matlab library directly. Our group use the first half of data for training, the second for testing, and use the same split method for both gnd feature and given data.
+For the original dataset D, we notice that there is no missing values, the value is around the average mean, so we could use Z-score normalization to preprocessing data and use the function “zscore” in Matlab library directly. Our group use the first half of data for training, the second for testing.
 
 
 
@@ -149,7 +149,7 @@ For this example, the training data indicates a good fit. The validation and tes
 	std recall & 0.0293 & 0.0097 & 0.0104 & 0.0126 & 0.0330\\
 	F-measure & 0.6782 & 0.8934 & 0.8705 & 0.9319 & 0.8265 \\
 	std F-measure & 0.0195 & 0.0070 & 0.0060 & 0.0093 & 0.0186 \\
-	Training time (S/Sample) & NA & 0.1028 & 0.0093 & 0.00518 & 0.2698 \\
+	Training time (S/Sample) &  0.0081 & 0.1028 & 0.0093 & 0.00518 & 0.2698 \\
 	Classification Time(Sample) & 0.008 & 0.0690 & 0.0026 & 0.0104 & 0.0082 \\
 \end{tabular}
 
@@ -159,7 +159,7 @@ For test accuracy, it could be reflected by accuracy, precision and f-measure. A
 
 From the above table, we could get the conclusion that Decision tree method could get the highest accuracy. The std accuracy is also has a relatively low level, so it means the average result is relatively stable. For the precision and std precision, all of the methods have a good performance, but maybe the best one is still the decision tree method.For recall and std recall, we could also get the conclusion that decision tree method and neural network have better perfomance, which means that the thue positive divided by the correct answer for both true positive and false negative is high. Similarly, the decision tree method also have the good performance for f-measure and std-measure.
 
-For trainig time and classification time, since for K-NN, the algorithm always choose the k nearsest points, so there is no training time, and for classification time in K-NN, it should compare all test samples with test sampeles. For time percepective, naive bayes has the best perfomance. 
+For classification time in K-NN, it should compare all test samples with test sampeles. For time percepective, naive bayes has the best perfomance and also have the lowest time value. 
 
 So we could choose decision tree method for both time saving and higher accuracy. 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.9.22)  10 MAR 2016 20:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.9.22)  10 MAR 2016 21:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -317,12 +317,12 @@ Overfull \hbox (96.75073pt too wide) in paragraph at lines 99--155
 [] 
  []
 
-[3] [4] [5]
+[3] [4]
 Underfull \hbox (badness 10000) in paragraph at lines 227--229
 
  []
 
-
+[5]
 Underfull \hbox (badness 10000) in paragraph at lines 234--235
 
  []
@@ -364,12 +364,12 @@ File: ../images-update/2-(3)-a-1.png Graphic file (type png)
 Package pdftex.def Info: ../images-update/2-(3)-a-1.png used on input line 278.
 
 (pdftex.def)             Requested size: 172.5pt x 129.37462pt.
- [6]
+
 Underfull \hbox (badness 10000) in paragraph at lines 287--288
 
  []
 
-
+[6]
 Underfull \hbox (badness 10000) in paragraph at lines 291--295
 
  []
@@ -404,7 +404,7 @@ Here is how much of TeX's memory you used:
 usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
 r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
 local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-Output written on A2-report.pdf (10 pages, 314335 bytes).
+Output written on A2-report.pdf (10 pages, 314192 bytes).
 PDF statistics:
  72 PDF objects out of 1000 (max. 8388607)
  42 compressed objects within 1 object stream
