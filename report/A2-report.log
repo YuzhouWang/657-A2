@@ -1,15 +1,15 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.9.25)  10 MAR 2016 16:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.9.22)  10 MAR 2016 20:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **A2-report.tex
 (./A2-report.tex
-LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 2 languages loaded.
-(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+LaTeX2e <2015/01/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -23,31 +23,31 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: pdftex.def on input line 91.
+Package graphics Info: Driver file: pdftex.def on input line 94.
 
-(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count87
@@ -55,10 +55,10 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
 )
-(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
 \captionmargin=\dimen105
@@ -71,12 +71,73 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 )
 \c@ContinuedFloat=\count88
 )
-(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
 \c@subfigure=\count89
 \c@subtable=\count90
 )
-(./A2-report.aux)
+(./A2-report.aux
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub1' multiply defined.
+
+)
 \openout1 = `A2-report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
@@ -91,7 +152,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
 LaTeX Font Info:    ... okay on input line 10.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
 LaTeX Font Info:    ... okay on input line 10.
- (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count91
 \scratchdimen=\dimen112
@@ -104,15 +165,15 @@ LaTeX Font Info:    ... okay on input line 10.
 \MPnumerator=\count95
 \makeMPintoPDFobject=\count96
 \everyMPtoPDFconversion=\toks16
-) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+) (/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 )
@@ -121,22 +182,22 @@ Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
 Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
 Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
@@ -148,7 +209,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
 
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
@@ -165,130 +226,188 @@ Overfull \hbox (119.84114pt too wide) in paragraph at lines 12--12
  [][] 
  []
 
-Missing character: There is no √ in font cmr10!
-Missing character: There is no Ø in font cmr10!
-<../images/K-NN.png, id=1, 578.16pt x 433.62pt>
-File: ../images/K-NN.png Graphic file (type png)
- <use ../images/K-NN.png>
-Package pdftex.def Info: ../images/K-NN.png used on input line 42.
-(pdftex.def)             Requested size: 345.0pt x 258.74484pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <../images/K-NN.png (PN
-G copy)>]
-Missing character: There is no √ in font cmr10!
-Missing character: There is no Ø in font cmr10!
- [3]
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ú in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ú in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ú in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ú in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ú in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ú in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ú in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-
-Overfull \hbox (1.72284pt too wide) in paragraph at lines 117--136
-[]\OT1/cmr/m/n/10 results are listed be-low: For link-age method=single Separat
-ion-Index= Rand-
+Overfull \hbox (31.16959pt too wide) in paragraph at lines 19--19
+[]\OT1/cmr/bx/n/14.4 Parameter Se-lec-tion and Clas-si-fi-ca-tion (for dataset
  []
 
-[4]
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ú in font cmr10!
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ò in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ô in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ò in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ô in font cmr10!
+<../images-update/1-(2)-2.png, id=1, 562.1pt x 421.575pt>
+File: ../images-update/1-(2)-2.png Graphic file (type png)
 
-Overfull \hbox (3.16742pt too wide) in paragraph at lines 163--177
-\OT1/cmr/m/n/10 Index=? F-measure=? For ag-glom-er-a-tive al-go-rithms Separati
-on-index=? Rand-
- []
-
+<use ../images-update/1-(2)-2.png>
+Package pdftex.def Info: ../images-update/1-(2)-2.png used on input line 42.
+(pdftex.def)             Requested size: 172.5pt x 129.37462pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 237.
+(Font)              <7> on input line 45.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 237.
+(Font)              <5> on input line 45.
 
-Overfull \hbox (1.3339pt too wide) in paragraph at lines 237--250
- [] 
+<../images-update/1-(2)-3.png, id=2, 562.1pt x 421.575pt>
+File: ../images-update/1-(2)-3.png Graphic file (type png)
+
+<use ../images-update/1-(2)-3.png>
+Package pdftex.def Info: ../images-update/1-(2)-3.png used on input line 51.
+(pdftex.def)             Requested size: 172.5pt x 129.37462pt.
+ [1
+
+{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <../
+images-update/1-(2)-2.png (PNG copy)> <../images-update/1-(2)-3.png (PNG copy)>
+]
+<../images-update/1-(3)-2.png, id=16, 578.16pt x 433.62pt>
+File: ../images-update/1-(3)-2.png Graphic file (type png)
+
+<use ../images-update/1-(3)-2.png>
+Package pdftex.def Info: ../images-update/1-(3)-2.png used on input line 84.
+(pdftex.def)             Requested size: 172.5pt x 129.37242pt.
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ì in font cmr10!
+
+<../images-update/1-(4)-netural-error.png, id=17, 562.1pt x 421.575pt>
+File: ../images-update/1-(4)-netural-error.png Graphic file (type png)
+
+<use ../images-update/1-(4)-netural-error.png>
+Package pdftex.def Info: ../images-update/1-(4)-netural-error.png used on input
+ line 106.
+(pdftex.def)             Requested size: 172.5pt x 129.37462pt.
+
+<../images-update/1-(4)-neural-perfomance.png, id=18, 562.1pt x 421.575pt>
+File: ../images-update/1-(4)-neural-perfomance.png Graphic file (type png)
+
+<use ../images-update/1-(4)-neural-perfomance.png>
+Package pdftex.def Info: ../images-update/1-(4)-neural-perfomance.png used on i
+nput line 113.
+(pdftex.def)             Requested size: 172.5pt x 129.37462pt.
+
+<../images-update/1-(4)-neural_confusion.png, id=19, 702.625pt x 702.625pt>
+File: ../images-update/1-(4)-neural_confusion.png Graphic file (type png)
+
+<use ../images-update/1-(4)-neural_confusion.png>
+Package pdftex.def Info: ../images-update/1-(4)-neural_confusion.png used on in
+put line 122.
+(pdftex.def)             Requested size: 172.5pt x 172.49306pt.
+
+<../images-update/1-(4)-neural_receiver.png, id=20, 702.625pt x 702.625pt>
+File: ../images-update/1-(4)-neural_receiver.png Graphic file (type png)
+
+<use ../images-update/1-(4)-neural_receiver.png>
+Package pdftex.def Info: ../images-update/1-(4)-neural_receiver.png used on inp
+ut line 129.
+(pdftex.def)             Requested size: 172.5pt x 172.49306pt.
+
+<../images-update/1-(4)-neural_gradient.png, id=21, 562.1pt x 421.575pt>
+File: ../images-update/1-(4)-neural_gradient.png Graphic file (type png)
+
+<use ../images-update/1-(4)-neural_gradient.png>
+Package pdftex.def Info: ../images-update/1-(4)-neural_gradient.png used on inp
+ut line 136.
+(pdftex.def)             Requested size: 172.5pt x 129.37462pt.
+
+
+LaTeX Warning: Float too large for page by 272.10997pt on input line 141.
+
+
+Overfull \hbox (96.75073pt too wide) in paragraph at lines 99--155
+[] 
  []
 
-[5] (./A2-report.aux) ) 
+[3] [4] [5]
+Underfull \hbox (badness 10000) in paragraph at lines 227--229
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 234--235
+
+ []
+
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+
+Underfull \hbox (badness 10000) in paragraph at lines 240--241
+
+ []
+
+<../images-update/2-(2)-3.png, id=32, 562.1pt x 421.575pt>
+File: ../images-update/2-(2)-3.png Graphic file (type png)
+
+<use ../images-update/2-(2)-3.png>
+Package pdftex.def Info: ../images-update/2-(2)-3.png used on input line 249.
+(pdftex.def)             Requested size: 172.5pt x 129.37462pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 263--264
+
+ []
+
+<../images-update/2-(3)-(a)-2.png, id=33, 562.1pt x 421.575pt>
+File: ../images-update/2-(3)-(a)-2.png Graphic file (type png)
+
+<use ../images-update/2-(3)-(a)-2.png>
+Package pdftex.def Info: ../images-update/2-(3)-(a)-2.png used on input line 27
+1.
+(pdftex.def)             Requested size: 172.5pt x 129.37462pt.
+
+<../images-update/2-(3)-a-1.png, id=34, 562.1pt x 421.575pt>
+File: ../images-update/2-(3)-a-1.png Graphic file (type png)
+
+<use ../images-update/2-(3)-a-1.png>
+Package pdftex.def Info: ../images-update/2-(3)-a-1.png used on input line 278.
+
+(pdftex.def)             Requested size: 172.5pt x 129.37462pt.
+ [6]
+Underfull \hbox (badness 10000) in paragraph at lines 287--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 291--295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--308
+
+ []
+
+[7] [8 <../images-update/1-(3)-2.png (PNG copy)>] [9 <../images-update/1-(4)-ne
+tural-error.png (PNG copy)> <../images-update/1-(4)-neural-perfomance.png (PNG 
+copy)> <../images-update/1-(4)-neural_confusion.png (PNG copy)> <../images-upda
+te/1-(4)-neural_receiver.png (PNG copy)> <../images-update/1-(4)-neural_gradien
+t.png (PNG copy)>] [10 <../images-update/2-(2)-3.png (PNG copy)> <../images-upd
+ate/2-(3)-(a)-2.png (PNG copy)> <../images-update/2-(3)-a-1.png (PNG copy)>]
+(./A2-report.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2594 strings out of 495028
- 41075 string characters out of 6181497
- 97746 words of memory out of 5000000
- 5804 multiletter control sequences out of 15000+600000
- 7895 words of font info for 28 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 38i,7n,38p,610b,310s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on A2-report.pdf (5 pages, 102700 bytes).
+ 2649 strings out of 493089
+ 43298 string characters out of 6134842
+ 109852 words of memory out of 5000000
+ 6123 multiletter control sequences out of 15000+600000
+ 8194 words of font info for 29 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 38i,8n,38p,1214b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
+Output written on A2-report.pdf (10 pages, 314335 bytes).
 PDF statistics:
- 41 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 72 PDF objects out of 1000 (max. 8388607)
+ 42 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
