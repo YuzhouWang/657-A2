@@ -4,7 +4,7 @@
 \usepackage{subcaption}
 %opening
 \title{ECE 657A Assignment \#2}
-\author{Yuzhou Wang (20609396), Laura McCrackin (20262085), \newline and   Huang Tianhui (20587328)       }
+\author{Yuzhou Wang (20609396), Laura McCrackin (20262085), \\ and Huang Tianhui (20587328)}
 
 
 \begin{document}
@@ -16,99 +16,101 @@
 %\includegraphics{../images/741741}
 %%\end{figure}
 
-\section{Parameter Selection and Classification (for dataset D)}
+\section{Parameter Selection and Classification}
 
-\subsection{question 1}
+\subsection{Preprocessing}
 
-For the original dataset D, we notice that there is no missing values, the value is around the average mean, so we could use Z-score normalization to preprocessing data and use the function “zscore” in Matlab library directly. Our group use the first half of data for training, the second for testing.
+For the original dataset D, we observed that there are no missing values and that the values for all points are close to the mean, so we simply used Z-score normalization to preprocess the data without any further outlier correction. As directed, we use the first half of data for training, and the second half for testing.
+
+\subsection{K-NN}
+
+To perform 5-fold cross validation, the training data was divided randomly into 5 partitions using the ``crossvalind" function.  Four of these partitions were used for training, with the fifth being using for testing; k-NN was run five times in this manner, so that each of the five training partitions in turn was used as the testing set while the remaining partitions were used as training.  The cross-validation accuracy was then taken to be the average accuracy for each of these five trials.
+
+This cross validation process was performed for each $k$ value, $k$=1,3,5...31.  It should be noted that since the cross validation partitioning is random, the $k$ value producing the highest classification accuracy is not the same every time this experiment is performed.  
+
+%For 5-fold cross validation, we could use the function "crossvalind", and use "fitcknn" to find K-NN neighbours. And for the calculation of accuracy, we could use "predict" function to judge the reality result is how similar with the theoretical result. And instead of the loop, every time we compare the best k, so that we could get the best K. For run time calculate, we could use "tic", "toc" function directly. By spiting data into training data and test data, and judge the result, we could get the truth positive, truth negative, false positive and false negative respectively. For more details, could reference the code.
 
 
-
-
-\subsection{question 2}
-
-For 5-fold cross validation, we could use the function "crossvalind", and use "fitcknn" to find K-NN neighbours. And for the calculation of accuracy, we could use "predict" function to judege the reality result is how similar with the therotical result. And insetead of the loop, everytimes we compare the best k, so that we could get the best K. For run time calculate, we could use "tic", "toc" function directly. By spliting data into training data and test data, and judge the result, we could get the truth positive, truth negarive, false positive and false negetive respectively. For more details, could refernce the code.
-
-
-\begin{figure}[p]
-%	\centering
-%		\centering
-%		\includegraphics[width=1\linewidth]{../images-update/1-(2)-1.png}
-%%		\label{fig:sub1}
-%	\end{subfigure}
-	
-	\begin{subfigure}{.5\textwidth}
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}{.49\textwidth}
 		\centering
+		\includegraphics[width=1\linewidth]{../images-update/1-(2)-1.png}
+		\caption{best k=5}
+%		\label{fig:sub1}
+	\end{subfigure}
+	\begin{subfigure}{.49\textwidth}
+		\centering
+		%TODO IS THIS THIE RIGHT PICTURE?! moved from folder 1
 		\includegraphics[width=1\linewidth]{../images-update/1-(2)-2.png}
 		\caption{best k=5}
 		\label{fig:sub1}
 	\end{subfigure}
 	%\caption{Data histograms before normalization.}
 	%\label{fig:hist1}
-	
-	\begin{subfigure}{.5\textwidth}
+
+	\begin{subfigure}{.49\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{../images-update/1-(2)-3.png}
 		\caption{best k=12}
 		\label{fig:sub1}
 	\end{subfigure}
-	
-%	\begin{subfigure}{.5\textwidth}
-%		\centering
-%		\includegraphics[width=1\linewidth]{../images-update/1-(2)-4.png}
-%		\caption{k=12}
-%		\label{fig:sub1}
-%	\end{subfigure}		
-\end{figure}
-
-Here we could see these two pictures for K-NN, and some different result could get. 
-For the above four pictures, we could notice that everytime the best k changes, the value of best k is around 5-12 and the accuracy is between 71\% and 73\%.
-
-We could also notice that when k is smaller than the range of best k, the accuracy increased and later larger the largest best k, it decreased. I think maybe it is the reason that less than k points is to small to be a class, in other words, less points can not represent a class, but if K is too large, then it means that some other classes's points maybe be included, which leads to a lower accuracy. Lastly, since we randomly choose the dataset and split them so that there could be some flexible results also.
-And what is more, we should also notice about the accuracy about the dataset itself, maybe there are some outliers. And what is more, since it is DNA sequence, it means some cuts may represent nothing, but it still appears at the dataset with a label. Above all, the result we get maybe not the exactly right answer.
-
-
-
-
-\subsubsection{question 3}
-
-Since the purpose of SVM is to produce a classifier that will work well on unseen examples (generalizes well), so it belongs to the decision (function) boundary approach. For design details, we could use two "for" loops, we could generate different combinations of "c" and "gamma". Firstly, we use the "sprintf" function to deal with different c and gamma as input. Later use "libsvmtrain" to training the data, use "libsvmpredict" to predict the data, and for calculating the trueth positive part, similar with the above.
-
-According to the best c and gamma, we could trace the ROC plot.C is the cost of classification as correctly stated, a large C gives you low bias and high variance. Low bias because you penalize the cost of missclasification a lot. A small C gives you higher bias and lower variance. Gamma is the parameter of a Gaussian Kernel (to handle non-linear classification). For non-linear classification, gamma controls the shape of the "peaks" where you raise the points. A small gamma gives you a pointed bump in the higher dimensions, a large gamma gives you a softer, broader bump.So a small gamma will give you low bias and high variance while a large gamma will give you higher bias and low variance. Theoretically with the increasing of gamma(kennel width), the accuracy decrease, because if the gamma is small enough(nearly 0), then it means that data point is not influenced or correlated with other data points. Small kernel width may cause over-fitting, and large one under-fitting. The so-called optimal kernel width is merely selected based on the tradeoff between under-fitting loss and over-fitting loss. 
-
-
-\begin{figure}[p]
-	\centering
-	\begin{subfigure}{.5\textwidth}
+	\begin{subfigure}{.49\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth]{../images-update/1-(3)-2.png}
-		\caption{ROC}
+		\includegraphics[width=1\linewidth]{../images-update/1-(2)-4.png}
+		\caption{best k=12}
 		\label{fig:sub1}
-	\end{subfigure}
-		 
+	\end{subfigure}		
+		\caption{Different cross-validation experiments and their results}
+	\label{fig:knn}
+\end{figure}
+
+In Figure \ref{fig:knn}, the classification accuracy for k-NN can be observed for four sample runs.  As can be seen, each time the value of best $k$ changes; it is consistently between 5-12 with an accuracy of between 71\% and 73\%.
+
+%We could also notice that when k is smaller than the range of best k, the accuracy increased and later larger the largest best k, it decreased. I think maybe it is the reason that less than k points is to small to be a class, in other words, less points can not represent a class, but if K is too large, then it means that some other class' points maybe be included, which leads to a lower accuracy. Lastly, since we randomly choose the dataset and split them so that there could be some flexible results also.
+%And what is more, we should also notice about the accuracy about the dataset itself, maybe there are some outliers. And what is more, since it is DNA sequence, it means some cuts may represent nothing, but it still appears at the dataset with a label. Above all, the result we get maybe not the exactly right answer.
+
+
+
+
+\subsection{SVM with RBF Kernel}
+
+Next, we perform a grid search to determine the best combination of $c$ and $gamma$ values for classifying our dataset using an SVM with a radial basis function (RBF) kernel.  That is, we perform 5-fold cross-validation for each combination of candidate $c$ and $gamma$ values, for $c$ = 0.1, 0.5, 1, 2, 5,
+10, 20, 50 and $gamma$ = 0.01, 0.05, 0.1, 0.5, 1, 2,
+5, 10.
+
+The resulting ROC curve may be seen in Figure \ref{fig:roc}.  The optimal combination of parameters can be seen as the innermost point of the curve.
+
+%According to the best c and gamma, we could trace the ROC plot.C is the cost of classification as correctly stated, a large C gives you low bias and high variance. Low bias because you penalize the cost of misclassification a lot. A small C gives you higher bias and lower variance. Gamma is the parameter of a Gaussian Kernel (to handle non-linear classification). For non-linear classification, gamma controls the shape of the "peaks" where you raise the points. A small gamma gives you a pointed bump in the higher dimensions, a large gamma gives you a softer, broader bump.So a small gamma will give you low bias and high variance while a large gamma will give you higher bias and low variance. Theoretically with the increasing of gamma(kennel width), the accuracy decrease, because if the gamma is small enough(nearly 0), then it means that data point is not influenced or correlated with other data points. Small kernel width may cause over-fitting, and large one under-fitting. The so-called optimal kernel width is merely selected based on the tradeoff between under-fitting loss and over-fitting loss. 
+
+\begin{figure}[h!]
+	\centering
+		\includegraphics[width=.8\linewidth]{../images-update/1-(3)-2.png}
+		\caption{ROC}
+		\label{fig:roc}	 
 \end{figure}
 
 
+\subsection{Comparison of Methods}
+We then perform a comparison of k-NN, SVM using an RBF kernel, a Naive Bayes classifier, a Decision Tree (using the ``fitctree" function), and a Neural Network (using ``patternnet").  The SVM and k-NN were run using the aforementioned ideal values, while the remaining methods were used with default parameters.  All experiments were repeated 20 times, with the classification accuracy averaged for all trials.
 
+%Since we need to calculate the data result for 20 times, so define different matrix result and all the initial values are all 0. For Naive Bayes classifier function could use "fitNaiveBayes" function directly, the training process or calculate true positive are all similar to the above method. And for decision tree classifier could use function "fitctree" and method also similar to the above. For neural network, we could first create a neutal network by the function of patternnet and hidden layer by default is 10. For training method, we could use "train" function, and label different networks according to the test result, by setting and labelling class by hand, we could better compare with test set.
 
-\subsubsection{question 4}
-Since we need to calculate the data result for 20 times, so define different matrix result and all the initial values are all 0. For Naive Bayes classifier function could use "fitNaiveBayes" function directly, the training process or calculate true positive are all similar to the above method. And for decision tree classifier could use function "fitctree" and method also similar to the above. For neural network, we could first create a neutal network by the function of patternnet and hidden layer by default is 10. For training method, we could use "train" function, and label different networks according to the test result, by setting and labelling class by hand, we could better compare with test set.
+From the accuracy table above, we can see that the Decision Tree provides the highest accuracy, precision, recall and F-measure values, but also requires the most time to run. The worst performance is achieved using k-NN.
 
-From the accuracy table above, we could see that the best method is decision tree with the highest accuracy, precision,recall and F-measure but it is also the waste most of time to decide. The worst answer result is from K-NN method.
+%For neural network, we could see the result in picture performance".  Generally, the error reduces after more epochs of training, but might start to increase on the validation data set as the network starts overfitting the training data. In the default setup, the training stops after six consecutive increases in validation error, and the best performance is taken from the epoch with the lowest validation error. Next we could see figure "neural-confusion". Since result – outputs = targets. The R value is an indication of the relationship between the outputs and targets. If R = 1, this indicates that there is an exact linear relationship between outputs and targets. If R is close to zero, then there is no linear relationship between outputs and targets. We could see the result for test, validation and train group, the result is around 50\%, so it is not really good or not really bad. For ROC graph, we could see the figure "neural-receiver", for training, validation and test ROC, they all have better performance since it is above 0.5. For neural-gradient
+%figure, we could see that the trend of gradient is nearly stable, since it represents the slope of the tangent of the graph of the function. It means that there is no significant increasing or decreasing(this picture not sure). From the figure "netural-error", we could see that around the 0 errors, it has the best result.(this picture also not sure)
+%For this example, the training data indicates a good fit. The validation and test results also show R values that greater than 0.9.
 
-For neural network, we could see the result in picture "perfomance".  Generally, the error reduces after more epochs of training, but might start to increase on the validation data set as the network starts overfitting the training data. In the default setup, the training stops after six consecutive increases in validation error, and the best performance is taken from the epoch with the lowest validation error. Next we could see figre "neural-confusion". Since result – outputs = targets. The R value is an indication of the relationship between the outputs and targets. If R = 1, this indicates that there is an exact linear relationship between outputs and targets. If R is close to zero, then there is no linear relationship between outputs and targets. We could see the result for test, calidation and train group, the result is around 50\%, so it is not really good or not really bad. For ROC graph, we could see the figure "neural-receiver", for training, validation and test ROC, they all have better perfomance since it is above 0.5. For neural-gradient
-figure, we could see that the trend of grandient is nearly stable, since it represents the slope of the tangent of the graph of the function. It means that there is no significant increasing or decreasing(this picture not sure). From the figure "netural-error", we could see that around the 0 errors, it has the best result.(this picture also not sure)
-For this example, the training data indicates a good fit. The validation and test results also show R values that greater than 0.9.
-\begin{figure}[p]
+\begin{figure}[h]
 	\centering
-	\begin{subfigure}{.5\textwidth}
+	\begin{subfigure}{.49\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{../images-update/1-(4)-netural-error.png}
 		\caption{netural-error}
 		\label{fig:sub1}
 	\end{subfigure}
-	
-	\begin{subfigure}{.5\textwidth}
+	\begin{subfigure}{.49\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{../images-update/1-(4)-neural-perfomance.png}
 		\caption{perfomance}
@@ -117,14 +119,13 @@ For this example, the training data indicates a good fit. The validation and tes
 	%\caption{Data histograms before normalization.}
 	%\label{fig:hist1}
 	
-	\begin{subfigure}{.5\textwidth}
+	\begin{subfigure}{.49\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{../images-update/1-(4)-neural_confusion.png}
 		\caption{neural-confusion}
 		\label{fig:sub1}
-	\end{subfigure}
-	
-	\begin{subfigure}{.5\textwidth}
+	\end{subfigure}	
+	\begin{subfigure}{.49\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{../images-update/1-(4)-neural_receiver.png}
 		\caption{neural-receiver}
@@ -138,28 +139,31 @@ For this example, the training data indicates a good fit. The validation and tes
 		\label{fig:sub1}
 	\end{subfigure}
 	
-\end{figure}
+	
+	\end{figure}
+	
+	
 \begin{tabular}
-	{l*{6}{c}r}   	& K-NN  & SVM & Naive Bayes & Decesion tree & Neural Network \\ \hline
+	{l*{6}{c}r}   	& K-NN  & RBF SVM & Naive Bayes & Decision Tree & Neural Net \\ \hline
 	Accuracy & 74.4182 & 89.1864 & 86.4864 & 92.9818 & 82.5773 \\ 
-	std accuracy & 1.2322 & 0.7382 & 0.6734 & 0.9843 & 1.7322 \\
+	std accuracy & 1.2322 & 0.7382 & 0.6734 & 0.9843 & 1.7322 \\ \hline
 	Precision & 0.9104 & 0.9113 & 0.8603 &0.9391 & 0.8461\\
-	std Precision & 0.028 & 0.0131 & 0.0101 & 0.0146 & 0.0240\\
-	recall & 0.5415 & 0.8764 & 0.8810 & 0.9250 & 0.8089\\
-	std recall & 0.0293 & 0.0097 & 0.0104 & 0.0126 & 0.0330\\
+	std Precision & 0.028 & 0.0131 & 0.0101 & 0.0146 & 0.0240\\ \hline
+	Recall & 0.5415 & 0.8764 & 0.8810 & 0.9250 & 0.8089\\
+	std recall & 0.0293 & 0.0097 & 0.0104 & 0.0126 & 0.0330\\ \hline
 	F-measure & 0.6782 & 0.8934 & 0.8705 & 0.9319 & 0.8265 \\
-	std F-measure & 0.0195 & 0.0070 & 0.0060 & 0.0093 & 0.0186 \\
-	Training time (S/Sample) &  0.0081 & 0.1028 & 0.0093 & 0.00518 & 0.2698 \\
-	Classification Time(Sample) & 0.008 & 0.0690 & 0.0026 & 0.0104 & 0.0082 \\
+	std F-measure & 0.0195 & 0.0070 & 0.0060 & 0.0093 & 0.0186 \\ \hline
+	Training time (s/sample) &  0.0081 & 0.1028 & 0.0093 & 0.00518 & 0.2698 \\
+	Class. time (s/sample) & 0.008 & 0.0690 & 0.0026 & 0.0104 & 0.0082 \\ \hline
 \end{tabular}
 
-\subsubsection{question 5}
-For test accuracy, it could be reflected by accuracy, precision and f-measure. At the same time we could also combine the std to see the stable result.Precision is how useful the search results are, and recall is how complete the results are.high precision means that an algorithm returned substantially more relevant results than irrelevant, while high recall means that an algorithm returned most of the relevant results.Recall is defined as the number of relevant documents retrieved by a search divided by the total number of existing relevant documents, while precision is defined as the number of relevant documents retrieved by a search divided by the total number of documents retrieved by that search. For f-meansure, it considers both the precision p and the recall r of the test to compute the score: p is the number of correct positive results divided by the number of all positive results, and r is the number of correct positive results divided by the number of positive results that should have been returned. The F1 score can be interpreted as a weighted average of the precision and recall, where an F1 score reaches its best value at 1 and worst at 0.
+\subsection{Strengths and Weaknesses}
+For test accuracy, it could be reflected by accuracy, precision and f-measure. At the same time we could also combine the std to see the stable result.Precision is how useful the search results are, and recall is how complete the results are.high precision means that an algorithm returned substantially more relevant results than irrelevant, while high recall means that an algorithm returned most of the relevant results.Recall is defined as the number of relevant documents retrieved by a search divided by the total number of existing relevant documents, while precision is defined as the number of relevant documents retrieved by a search divided by the total number of documents retrieved by that search. For f-measure, it considers both the precision p and the recall r of the test to compute the score: p is the number of correct positive results divided by the number of all positive results, and r is the number of correct positive results divided by the number of positive results that should have been returned. The F1 score can be interpreted as a weighted average of the precision and recall, where an F1 score reaches its best value at 1 and worst at 0.
 
 
-From the above table, we could get the conclusion that Decision tree method could get the highest accuracy. The std accuracy is also has a relatively low level, so it means the average result is relatively stable. For the precision and std precision, all of the methods have a good performance, but maybe the best one is still the decision tree method.For recall and std recall, we could also get the conclusion that decision tree method and neural network have better perfomance, which means that the thue positive divided by the correct answer for both true positive and false negative is high. Similarly, the decision tree method also have the good performance for f-measure and std-measure.
+From the above table, we could get the conclusion that Decision tree method could get the highest accuracy. The std accuracy is also has a relatively low level, so it means the average result is relatively stable. For the precision and std precision, all of the methods have a good performance, but maybe the best one is still the decision tree method.For recall and std recall, we could also get the conclusion that decision tree method and neural network have better performance, which means that the true positive divided by the correct answer for both true positive and false negative is high. Similarly, the decision tree method also have the good performance for f-measure and std-measure.
 
-For classification time in K-NN, it should compare all test samples with test sampeles. For time percepective, naive bayes has the best perfomance and also have the lowest time value. 
+For classification time in K-NN, it should compare all test samples with test samples. For time percepective, naive bayes has the best performance and also have the lowest time value. 
 
 So we could choose decision tree method for both time saving and higher accuracy. 
 
@@ -178,23 +182,21 @@ So we could choose decision tree method for both time saving and higher accuracy
 
 
 
-\section{Clustering Analysis (for dataset F)}
-\subsection{question 1}
-1) Perform hierarchical clustering using agglomerative algorithms:\\
-a)\\
-For clustering data into 10 classes, we could use the matlab library function 'clusterdata'. Firstly, for separation-index, we should calculate the center of each cluster and calculate the square of each distance for each point with the center point. Later, we could use the result to divided by the total number of rows muliply the maximum distance for each cluster. And for rand-index, it should be calculated by (a+d)/M, here 'a' means TP and 'd' means FN, M means total number of comparation. For f-measure, we should firstly caluculate the number of objects in class j and cluster i, at the same time should also calulate the number of objects in class i as ni and number of objects in class j as nj. Later we could get the result of precision and recall. Lastly we could get the result using the function:   
-F(i,j) = 2*precision(i,j)* recall(i,j)/(precision(i,j)+recall(i,j)).
-For different algorithm, should use the function of 'single', 'complex' and 'ward'.
+\section{Clustering Analysis}
+\subsection{Hierarchical Clustering Using Agglomerative Algorithms}
+\subsubsection{Comparison of Linkage Methods}
+We use the Matlab library function `clusterdata' to perform clustering using single, complete, and ward linkage methods, respectively.
+
+To find the separation index, we calculate the centre of each cluster and calculate the square of the distance from each point to the centre point. This result is then divided by the total number of rows multiplied by the maximum distance for each cluster. For rand-index, it should be calculated by $(a+d)/M$, where $a$ is the number of True Positives and $d$ is the number of False Negatives, with $M$ being the total number of possible point comparisons. For F-measure, we first calculate the precision and recall, and then use the function:   
+$F(i,j) = 2*precision(i,j)* recall(i,j)/(precision(i,j)+recall(i,j)).$
 
 
-
-
-And according to the definition, we could get the conclusion that the result of separation-index is highly depending on the cluster result. Smaller separation-index means that every point in the cluster is close and as a result there could be more groups.
+According to the definition, the separation index is highly dependant on the clustering results. Smaller separation index means that every point in the cluster is close and as a result there could be more groups.
 The result of rand-index and f-measure could have the similar trend for representing accuracy of the same cluster group, which is corresponding different with separation-index. It means that if there is a higher accuracy for cluster, the rand-index and f-measure could correspondingly higher, but it means larger size of cluster, as a result separation-index could be lower.
 
 
 
-For separation-index there are two ways to calculte, one is for the maxium distance and another is for minimum distance. Below the first table shows the result for the maxmium distance.
+There are two ways to calculate the separation index; one is for the maximum distance and another is for minimum distance. Below the first table shows the result for the maximum distance.
 For maximum distance method:
 
 %For linkage method=single\\
@@ -214,7 +216,7 @@ For maximum distance method:
 
 
 \begin{tabular}
-	{l*{3}{c}r}   	& single  & complete & ward \\ \hline
+	{l*{3}{c}r}   	& Single  & Complete & Ward \\ \hline
 	Separation-Index& 1.7540 & 0.6151 & 0.4937  \\ 
 	Rand-Index & 0.1097 & 0.8184 & 0.8772 \\
 	F-measure & 0.0962 & 0.2168 & 0.2801 \\
@@ -224,31 +226,28 @@ For maximum distance method:
 
 
 
-For separation-index, according to the function, we could get the conclution that when we choose the maximum method, the samller the value it is, the closer for a class and far away for different class. So we hope the SI value is samll.The trend should be different with rand-index and f-measure.So, the ward algorithm have the best result for the samllest separation-index and the largest rand-index and f-measure value. 
-b)\\
+When we choose the maximum method, the smaller the value it is, the closer for the points are within a class and the greater the separation from other classes. A smaller SI value is therefore ideal. The opposite is true for rand-index and f-measure. So, the ward algorithm has the best result, having the smallest separation-index and the largest rand-index and f-measure values. 
 
-After we run the 'ward' algorithm, and could the result for best cluster number is 15.
+\subsubsection{Optimal Number of Clusters}
 
-\subsection{question 2}
+After we run the `ward' algorithm for a variety of cluster numbers, we found the optimal value to be 15.
 
-a) \\
+\subsection{Clustering Using K-Means}
 
-For calculation method of separation-index, rand-index and f-measure, they are similar with the above. The algorithm of k-means could be run by the function “kmeans”, and we could see the picture for 2-2-(a). We could see that both rand-index increase a lot with the increasing number of cluster, and f-measure increase a lot at the beginning and later a little bit decrease, but separation-index decrease.
+The result of using k-means can be seen in Figure \ref{fig:kmeans}. We could see that both rand-index increase a lot with the increasing number of cluster, and f-measure increase a lot at the beginning and later a little bit decrease, but separation-index decrease.
 
 The reason why rand-index increase is because of the calculating function with the increasing number of cluster, it is closer to the right cluster way, but for the value of M it did not change, so it has an increasing trend. Similarly, f-measure also increase, for increasing number of clusters, it could reflect better accuracy. And for the separation-index, with the increasing number of cluster the value of SI should also decrease for more densy in the same group and more distance for different class. Above all, all the three methods shows that the increasing number of clusters leading to a better result.
-
-b) \\
 
 Combined with three methods, the best cluster number is 8, without too high separation-index or too low rand-index and f-measure.
 
 
-\begin{figure}[p]
+\begin{figure}[h]
 	\centering
-	\begin{subfigure}{.5\textwidth}
+	\begin{subfigure}{.9\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{../images-update/2-(2)-3.png}
-		\caption{k-means algorithm}
-		\label{fig:sub1}
+		\caption{K-means algorithm}
+		\label{fig:kmeans}
 	\end{subfigure}
 	
 	
@@ -257,36 +256,35 @@ Combined with three methods, the best cluster number is 8, without too high sepa
 
 
 
-\subsection{question 3}
+\subsection{Fuzzy C-Means}
 
 
-a)\\
+\subsubsection{Cluster Membership}
 
-For the fuzzy c-means methods, we could use 'fcm' function directly, and label the result is same with digit '1' or '3', so that we could get the graph below.
+For the fuzzy c-means methods, we could use `fcm' function directly, and label the result is same with digit `1' or `3', so that we could get the graphs in Figure \ref{fig:1vs3}.
 
-\begin{figure}[p]
+\begin{figure}[h]
 	\centering
-	\begin{subfigure}{.5\textwidth}
+	\begin{subfigure}{.49\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{../images-update/2-(3)-(a)-2.png}
-		\caption{digit 1}
+		\caption{Digit 1}
 		\label{fig:sub1}
 	\end{subfigure}
-	
-	\begin{subfigure}{.5\textwidth}
+	\begin{subfigure}{.49\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{../images-update/2-(3)-a-1.png}
-		\caption{digit 3}
+		\caption{Digit 3}
 		\label{fig:sub1}
 	\end{subfigure}
-	
+	\caption{Points from digits 1 and 3 in each cluster (out of 1.0)}
+	\label{fig:1vs3}
 \end{figure}
-
-From the graph, we could see that, for digit 1, it mainly in cluster 5 to 7, without too much overlapping with other groups. However, the result of digit 3 could be checked in different clusters, which means that there are more overlaps in cluster 3 but less in cluster 1.For the reason why there is less overlapping for digit 1 maybe for the hand writting dataset, the digit '1' is hard to make confusing with other digits unlike digit '3', 
+From the graph, we could see that, for digit 1, it mainly in cluster 5 to 7, without too much overlapping with other groups. However, the result of digit 3 could be checked in different clusters, which means that there are more overlaps in cluster 3 but less in cluster 1. For the reason why there is less overlapping for digit 1 maybe for the hand writing dataset, the digit `1' is hard to make confusing with other digits unlike digit `3', which is similar to the digit 8, for example.
  
-b)\\
+\subsubsection{Hard Clustering}
 
-In fuzzy clustering (also referred to as soft clustering), data elements can belong to more than one cluster, and associated with each element is a set of membership levels.But in hard clustering, data is divided into distinct clusters, where each data element belongs to exactly one cluster.
+In fuzzy clustering (also referred to as soft clustering), data elements can belong to more than one cluster, and associated with each element is a set of membership levels. But in hard clustering, data is divided into distinct clusters, where each data element belongs to exactly one cluster. Hard clustering can perhaps be considered a less flexible method, where the subtleties of classification uncertainty reflected in fuzzy clustering are no longer retained.
 
 For Fuzzy c-means\\
 Separation-index=0.4454\\
@@ -306,7 +304,7 @@ Separation-Index=0.4937 \\
 Rand-Index=0.8772 \\
 F-measure= 0.2801 \\
 
-So from the above, we could get the conclution that, fuzzy-c means has a better perfomance than other three methods.
+As can be seen above, fuzzy-c means has better performance than the other three methods.
 
 
 
